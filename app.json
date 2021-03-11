@@ -1,0 +1,57 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/template/tabbar",
+    "pages/mine/mine",
+    "pages/plIndex/plIndex",
+    "pages/plMine/plMine"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "Weixin",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#dbdbdb",
+    "selectedColor": "#1296db",
+    "backgroundColor": "white",
+    "borderStyle": "white",
+    "position": "bottom",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "/pages/images/sy.png",
+        "selectedIconPath": "/pages/images/sy1.png"
+      },
+      {
+        "pagePath": "pages/logs/logs",
+        "text": "记录",
+        "iconPath": "/pages/images/jl.png",
+        "selectedIconPath": "/pages/images/jl1.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "/pages/images/wd.png",
+        "selectedIconPath": "/pages/images/wd1.png"
+      },
+      {
+        "pagePath": "pages/plIndex/plIndex",
+        "text": "首页",
+        "iconPath": "/pages/images/sy.png",
+        "selectedIconPath": "/pages/images/sy1.png"
+      },
+      {
+        "pagePath": "pages/plMine/plMine",
+        "text": "我的",
+        "iconPath": "/pages/images/wd.png",
+        "selectedIconPath": "/pages/images/wd1.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

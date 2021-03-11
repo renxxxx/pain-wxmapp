@@ -1,0 +1,3 @@
+<import src="../template/tabbar.wxml"/>
+医生首页页面内容
+<template is="tabBar" data="{{tabBar:tabBar}}"></template>

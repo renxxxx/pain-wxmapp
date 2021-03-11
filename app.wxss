@@ -1,0 +1,34 @@
+/**app.wxss**/
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+} 
+.tabbar {
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  width: 100%;
+}
+ 
+.tabbar-item {
+  flex-grow: 1;
+  padding: 6rpx 0;
+  text-align: center;
+}
+ 
+.tabbar-icon {
+  width: 46rpx;
+  height: 46rpx;
+  display: block;
+  /* margin: 0 auto; */
+  margin: 6rpx auto 0;
+}
+ 
+.tabbar-text {
+  font-size: 24rpx;
+}
