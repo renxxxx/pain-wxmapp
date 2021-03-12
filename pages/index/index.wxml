@@ -1,3 +1,32 @@
 <import src="../template/tabbar.wxml"/>
-医生首页页面内容
+<view class="painList">
+  <view class="painItem" wx:for="{{painList}}">
+    <image src="{{item.avator}}"></image>
+    <text>{{item.painName}}</text>
+  </view>
+</view>
+<!-- 提问列表 -->
+  <view class="queList">
+    <view class="queItem"  wx:for="{{queList}}">
+      <view>
+        <text class="ft_28 col_333" style="margin-right:30rpx">{{item.diagnoseNo}}</text>
+        <text class="ft_28 ">{{item.diseaseName}}</text>
+        <!-- <image></image> -->
+      </view>
+      <view style="margin-top:10rpx" class="ft_30 col_333 line_1" wx:if="{{item.lastMessage}}">{{item.lastMessage}}</view>
+      <view style="margin-top:10rpx" class="ft_28 col_666">{{item.createTime}}</view>
+    </view>
+  </view>
+  <!-- 上拉加载更多 -->
+<view class="lastText" >{{lastText}}</view>
+<view style="height:230rpx;width:100%"></view>
+
+<view class="askQue" bindtap="askQue">向专家提问 <image src="../images/ask.png"></image></view>
 <template is="tabBar" data="{{tabBar:tabBar}}"></template>
+
+<!-- 兵种弹窗 -->
+<view class="disease"  bindtap="closedisease" wx:if="{{diseaseShow}}">
+  <view class="diseaseList" catchtap='thisShow' >
+    <view class="diseaseItem ft_30 col_333" bindtap="diseaseSure" wx:for="{{diseaseList}}" data-name='{{item.name}}' data-id="{{item.diseaseId}}">{{item.name}}</view>
+  </view>
+</view>

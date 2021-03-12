@@ -1,0 +1,4 @@
+<!--pages/chatNow/chatNow.wxml-->
+<view>
+  <text id='{{disease.diseaseId}}'>{{disease.diseaseName}}</text>
+</view>

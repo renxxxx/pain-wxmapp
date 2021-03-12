@@ -5,7 +5,8 @@
     "pages/template/tabbar",
     "pages/mine/mine",
     "pages/plIndex/plIndex",
-    "pages/plMine/plMine"
+    "pages/plMine/plMine",
+    "pages/chatNow/chatNow"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -1,19 +1,90 @@
 /**index.wxss**/
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #aaa;
+page{
+  background: #f5f5f5;
+}
+.askQue{
+  width: 100%;
+  position: fixed;
+  bottom: 109rpx;
+  left: 0;
+  height: 90rpx;
+  text-align: center;
+  line-height: 90rpx;
+  background: #1296db;
+  font-size: 28rpx;
+  color: #ffffff;
+ 
+}
+.askQue image{
+  width: 40rpx;
+  height:40rpx ;
+  vertical-align: middle;
+  /* background-color: #ffffff; */
+}
+.painList{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  color: #555555;
+  background: #ffffff;
+  padding: 20rpx 0 20rpx 15rpx;
+  box-sizing: border-box;
+  border-top: 1rpx solid #e5e5e5;
 }
 
-.userinfo-avatar {
-  overflow: hidden;
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
+.painItem{
+  width: 120rpx;
+  height: auto;
+  display: inline-block;
+  text-align: center;
+}
+.painItem image{
+  width: 80rpx;
+  height: 80rpx;
+  margin-bottom: 10rpx;
+  display: block;
+  margin-left: 20rpx;
+}
+.queList{
+  width: 100%;
+  height: auto;
+  margin: 195rpx 0 20rpx;
+}
+.queList .queItem{
+  width: 710rpx;
+  height: auto;
+  margin: 20rpx 20rpx 0;
+  background-color: #ffffff;
+  padding: 24rpx;
+  box-sizing: border-box;
+  border-radius:8rpx ;
+}
+.queItem>view:nth-child(1){
+  font-size: 28rpx;
+  line-height: 40rpx;
 }
 
-.usermotto {
-  margin-top: 200px;
+.disease{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  background-color: rgba(0,0,0,0.5);
+}
+.diseaseList{
+  padding: 10% 0;
+  width: 80%;
+  height: 80%;
+  margin: 10%;
+  background-color: #ffffff;
+  box-sizing: border-box;
+}
+.diseaseItem{
+  width: 50%;
+  text-align: center;
+  display: inline-block;
+  line-height: 80rpx;
 }

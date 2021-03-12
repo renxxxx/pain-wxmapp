@@ -4,17 +4,51 @@ const app = getApp()
 
 Page({
   data: {
-    motto: 'Hello World',
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    canIUseGetUserProfile: false,
-    canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName') // 如需尝试获取用户信息可改为false
+    painList:[
+      {painId:1,painName:'张医生',avator:'../images/tx1.png'},
+      {painId:1,painName:'王医生',avator:'../images/tx2.png'},
+      {painId:1,painName:'李医生',avator:'../images/tx1.png'},
+      {painId:1,painName:'赵医生',avator:'../images/tx1.png'},
+      {painId:1,painName:'顾医生',avator:'../images/tx2.png'},
+      {painId:1,painName:'潘医生',avator:'../images/tx2.png'}
+    ],
+    queList:[
+      { "diagnoseNo": 3, "createTime": "3月02号 5:07", "diseaseName": "脑壳疼", "lastMessage": '先去拍个片子查吧'},
+      { "diagnoseNo": 1, "createTime": "昨天 4:07", "diseaseName": "肋骨疼", "lastMessage": '请上传CT请上传CT请上传CT请上传CT请上传CT请上传CT'},
+      { "diagnoseNo": 2, "createTime": "今天 5:07", "diseaseName": "头疼", "lastMessage": null},
+      { "diagnoseNo": 2, "createTime": "今天 5:07", "diseaseName": "头疼", "lastMessage": null},
+      { "diagnoseNo": 2, "createTime": "今天 5:07", "diseaseName": "头疼", "lastMessage": null},
+      { "diagnoseNo": 2, "createTime": "今天 5:07", "diseaseName": "头疼", "lastMessage": null},
+      { "diagnoseNo": 2, "createTime": "今天 5:07", "diseaseName": "头疼", "lastMessage": null},
+      { "diagnoseNo": 4, "createTime": "今天 14:07", "diseaseName": "腿抽筋", "lastMessage": '站久了吧你'},
+    ],
+    diseaseList:[{diseaseId:1,name:'头疼'},{diseaseId:2,name:'肚子疼'},{diseaseId:3,name:'胸疼'},{diseaseId:4,name:'屁股疼'},{diseaseId:5,name:'眼睛疼'},{diseaseId:6,name:'嗓子疼'},{diseaseId:7,name:'胳膊疼'},{diseaseId:8,name:'腿疼'},{diseaseId:9,name:'全身疼'}],
+    lastText:'上滑加载更多',
+    diseaseShow:false
   },
   // 事件处理函数
   bindViewTap() {
     wx.navigateTo({
       url: '../logs/logs'
+    })
+  },
+  askQue(){
+    this.setData({
+      diseaseShow:true
+    })
+  },
+  closedisease(){
+    this.setData({
+      diseaseShow:false
+    })
+  },
+  // 选择病种
+  diseaseSure(e){
+    this.setData({
+      diseaseShow:false
+    })
+    wx.navigateTo({
+      url: '../chatNow/chatNow?diseaseId='+e.currentTarget.dataset.id+'&diseaseName='+e.currentTarget.dataset.name,
     })
   },
   onLoad() {
