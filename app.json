@@ -1,11 +1,11 @@
 {
   "pages": [
+    "pages/plMine/plMine",
+    "pages/plIndex/plIndex",
     "pages/index/index",
     "pages/logs/logs",
     "pages/template/tabbar",
-    "pages/mine/mine",
-    "pages/plIndex/plIndex",
-    "pages/plMine/plMine"
+    "pages/mine/mine"
   ],
   "window": {
     "backgroundTextStyle": "light",
