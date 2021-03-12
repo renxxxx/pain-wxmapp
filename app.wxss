@@ -90,3 +90,9 @@
     color: #999999;
     text-align: center;
 }
+.lf{
+  float: left;
+}
+.rt{
+  float: right;
+}

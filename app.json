@@ -1,12 +1,13 @@
 {
   "pages": [
+    "pages/chatNow/chatNow",
     "pages/index/index",
     "pages/logs/logs",
     "pages/template/tabbar",
     "pages/mine/mine",
     "pages/plIndex/plIndex",
-    "pages/plMine/plMine",
-    "pages/chatNow/chatNow"
+    "pages/plMine/plMine"
+
   ],
   "window": {
     "backgroundTextStyle": "light",
