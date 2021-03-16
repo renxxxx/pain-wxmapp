@@ -13,12 +13,19 @@ page{
   margin-right: 20rpx;
 }
 .chatBox{
-  position: absolute;
+  /* position: absolute;
+  top: 0;
+  bottom: 120rpx; */
+  width: 100%;
+  height: auto;
+  margin-bottom: 40rpx;
+  overflow: auto;
+  /* position: absolute;
   top: 80rpx;
   bottom: 136rpx;
   left: 0;
   right: 0;
-  overflow-y: auto;
+  overflow-y: auto; */
 }
 .chatItem{
   margin-top: 35rpx;
@@ -45,6 +52,7 @@ page{
   line-height: 40rpx;
   max-width: 400rpx;
   border-radius: 4rpx;
+  
 }
 .sj1{
   width:0;
@@ -70,14 +78,15 @@ margin-right: -24rpx;
   bottom: 0;
   left: 0;
   height: auto;
-  min-height: 130rpx;
+  min-height: 110rpx;
   /* height:130rpx ; */
   background-color: #f8f8f8;
+  z-index: 2;
 }
 .sendPic{
   width: 50rpx;
   height: 40rpx;
-  padding: 20rpx;
+  padding:30rpx 30rpx;
   float: right;
 }
 .chatNow > view{
@@ -85,21 +94,27 @@ margin-right: -24rpx;
   width: 100%;
 }
 .textarea{
-  width: 500rpx;
+  width: 584rpx;
+  float: left;
   /* height: 80rpx; */
   /* height: auto; */
-  padding: 18rpx;
+  padding: 8rpx;
   line-height: 44rpx;
-  margin: 15rpx 20rpx;
-  /* max-height: 212rpx; */
-  min-height: 80rpx;
+  margin: 20rpx 0 20rpx 20rpx;
+  /* max-height: 168rpx; */
+  max-height: 212rpx;
+  min-height: 44rpx;
   background: #ffffff;
   /* float: left; */
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
   /* word-wrap: break-word; */
 
     overflow-x: hidden;
 
     /* overflow-y: auto; */
+
+white-space: normal;
+text-overflow: ellipsis;
+word-wrap: break-word;
 }

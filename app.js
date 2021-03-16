@@ -10,9 +10,22 @@ App({
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        console.log(res.code)
       }
     })
+    let vm=this
+    wx.getSystemInfo({
+      success: function (res) {
+
+        let clientHeight = res.windowHeight;
+        let clientWidth = res.windowWidth;
+        let changeHeight = 750 / clientWidth;
+        let height = clientHeight * changeHeight;
+        console.log(res,height)
+        vm.globalData.height=height
+    }})
   },
+  
   // 自定义显示tabbar
 onTabBar: function(key) {
   var _curPageArr = getCurrentPages();
@@ -96,6 +109,7 @@ tabBarData: {
   }
 },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    height:0,
   }
 })
