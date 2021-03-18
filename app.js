@@ -11,6 +11,20 @@ App({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         console.log(res.code)
+        wx.request({
+          url:vm.globalData.url + '/login-by-wxmapp',
+          data:{
+            code:res.code
+          },
+          method:'get',
+          success(res){
+            if(res.data.code==0){
+              vm.globalData.token=res.data.data.token
+              console.log(vm.globalData.token)
+            }
+          }
+    
+        })
       }
     })
     let vm=this
@@ -24,6 +38,7 @@ App({
         console.log(res,height)
         vm.globalData.height=height
     }})
+    
   },
   
   // 自定义显示tabbar
@@ -111,5 +126,8 @@ tabBarData: {
   globalData: {
     userInfo: null,
     height:0,
+    url:'https://dev.inininininin.com/pain',
+    mockUrl:'https://dev.inininininin.com',
+    token:''
   }
 })

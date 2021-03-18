@@ -1,1 +1,119 @@
 /* pages/plIndex/plIndex.wxss */
+.index{
+  width: 100%;
+  height: calc(100vh - 106rpx);
+  margin: 0rpx;
+  padding: 0rpx;
+  background-color: #f2f2f2;
+}
+.title{
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 28rpx;
+  background: #ffffff;
+  position: relative;
+}
+.slider{
+  height: 100%;
+  width: 50%;
+  position: absolute;
+  left :0;
+  top: 0;
+  z-index: 0;
+  transition-duration: .3s;
+  background-color: #4090FD;
+  transform:translateX(0px) translateX(-100%)
+}
+.titleBox{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  
+}
+
+.titleBox>text{
+  width: 50%;
+  height: 100%;
+  line-height: 80rpx;
+  text-align: center;
+  position: relative;
+  animation: .3s ease forwards;
+  z-index:1;
+}
+.titleBox>text:first-child{
+  color: #ffffff;
+}
+@keyframes show {
+  0% {
+    color: black;
+  }
+  100% {
+    color: #ffffff;
+  }
+}
+@keyframes hide {
+  0% {
+    color: #ffffff;
+  }
+  100% {
+    color: black;
+  }
+}
+.content{
+  width: 100%;
+  height: calc(100% - 80rpx);
+  
+}
+.content_slider{
+  display: box;
+  height: 100%;
+  display: box;
+  display: flex;
+  transition-duration: .3s;
+}
+.slider_left,.slider_right{
+  width: 100%;
+  height: 100%;
+  flex-shrink: 0;
+  overflow-y: scroll;
+}
+.messageList{
+  width: 90%;
+  margin: 20rpx auto;
+  background-color: #ffffff;
+  min-height: 120rpx;
+  border-radius: 16rpx;
+  padding: 15rpx 26rpx;
+  box-sizing: border-box;
+  font-size: 28rpx;
+}
+.ml_title{
+  width: 100%;
+  display: flex;
+  justify-content: left;
+}
+.ml_title>text:first-child{
+  width: 180rpx;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+.ml_title>text:last-child{
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-all;
+  word-wrap: break-word;
+  width: 251rpx;
+}
+.ml_content{
+  width: 100%;
+  height: auto;
+  margin: 12rpx 0rpx;
+}

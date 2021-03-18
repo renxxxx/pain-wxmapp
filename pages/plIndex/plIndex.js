@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    message:['','','','','','','','','','','','','','','','','','','','','','','','','']
   },
 
   /**
@@ -52,9 +52,9 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    
   },
-
+  
   /**
    * 页面上拉触底事件的处理函数
    */
@@ -67,5 +67,27 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  noDealWithFn: function(_value){
+    let _this = this, 
+    _v = _value.currentTarget.dataset,
+    w = wx.getSystemInfoSync().windowWidth;;
+     if(parseInt(_v.status)){
+      _this.setData({
+        yesAnimationName: "show",
+        noAnimationName: "hide",
+        transformWidth: w,
+        sliderWidth:w,
+        sliderLeft:-w
+      })
+    }else{
+      _this.setData({
+        yesAnimationName:"hide",
+        noAnimationName: "show",
+        transformWidth: w/2,
+        sliderWidth:w,
+        sliderLeft:0
+      })
+    }
   }
 })

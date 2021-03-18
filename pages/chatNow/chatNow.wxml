@@ -9,15 +9,15 @@
       <view  wx:if="{{item.userNo!=userId}}">
         <image class="avator lf"  src="../images/tx1.png"></image>
         <text class="sj1 lf"></text>
-        <text class="ft_30 col_333 lf txt wordBreak" wx:if="{{item.txt}}">{{item.txt}}</text>
+        <text class="ft_28 col_333 lf txt wordBreak" wx:if="{{item.txt}}">{{item.txt}}</text>
         
         <image bindtap="previewImage" data-src='{{item.img}}' class="lf img"  mode="aspecill"  wx:if="{{item.img}}" src="{{item.img}}"></image>
         <!-- <text class="ft_28 col_999">{{item.createTime}}</text> -->
       </view>
       <view wx:if="{{item.userNo==userId}}">
         <image class="avator rt"   src="../images/tx2.png"></image>
-        <text class="sj2 rt"  wx:if="{{item.txt}}"></text>
-        <text class="ft_30 col_333 rt txt wordBreak"  wx:if="{{item.txt}}">{{item.txt}}</text>
+        <text class="sj2 rt "  wx:if="{{item.txt}}"></text>
+        <text class="ft_28 col_333 rt txt wordBreak wordMe"  wx:if="{{item.txt}}">{{item.txt}}</text>
         
         <image  bindtap="previewImage" data-src='{{item.img}}' class="rt img"  mode="aspecill" src="{{item.img}}"  wx:if="{{item.img}}"></image>
         

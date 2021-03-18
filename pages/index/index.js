@@ -26,6 +26,20 @@ Page({
     lastText:'上滑加载更多',
     diseaseShow:false
   },
+  diseaseList(){
+    // console.log(app.globalData.mockUrl + '/pain-diagnosis/diseases')
+    wx.request({
+      url:app.globalData.url + '/pain-diagnosis/diseases',
+      method:'get',
+      success(res){
+        if(res.data.code==0){
+          // vm.globalData.token=res.data.data.token
+          console.log(res.data.data)
+        }
+      }
+
+    })
+  },
   // 事件处理函数
   bindViewTap() {
     wx.navigateTo({
@@ -48,10 +62,12 @@ Page({
       diseaseShow:false
     })
     wx.navigateTo({
-      url: '../chatNow/chatNow?diseaseId='+e.currentTarget.dataset.id+'&diseaseName='+e.currentTarget.dataset.name,
+      // url: '../chatNow/chatNow?diseaseId='+e.currentTarget.dataset.id+'&diseaseName='+e.currentTarget.dataset.name,
+      url: '../chat/chat?diseaseId='+e.currentTarget.dataset.id+'&diseaseName='+e.currentTarget.dataset.name,
     })
   },
   onLoad() {
+    this.diseaseList()
     if (wx.getUserProfile) {
       this.setData({
         canIUseGetUserProfile: true

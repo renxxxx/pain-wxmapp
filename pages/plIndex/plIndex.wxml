@@ -1,3 +1,39 @@
 <import src="../template/tabbar.wxml"/>
-专家首页页面内容
+  <view class="index"> 
+    <view class="title">
+      <view class="titleBox">
+          <text class="title_left" style="animation-name:{{noAnimationName}}" bindtap="noDealWithFn" data-status="0">未处理</text>
+          <text class="title_right" style="animation-name:{{yesAnimationName}}" bindtap="noDealWithFn" data-status="1">已处理</text>
+      </view>
+      <text class="slider" style="transform:translateX({{transformWidth? transformWidth+'px':'100%'}}) translateX(-100%)"></text>
+  </view>
+  <view class="content">
+    <view class="content_slider" style="transform:translateX({{sliderLeft}}px)">
+      <view class="slider_left" style="width:{{sliderWidth? sliderWidth+'px':'100%'}};">
+        <view class="messageList" wx:for="{{message}}">
+          <view class="ml_title">
+            <text>王淑芬</text><text>骨关节痛</text>
+          </view>
+          <view class="ml_content">请上传血常规报告</view>
+          <view class="ml_time">今天 16：32</view>
+        </view>
+    </view>
+    <view class="slider_right" style="width:{{sliderWidth? sliderWidth+'px':'100%'}};">
+      <view class="messageList" wx:for="{{message}}">
+        <view class="ml_title">
+          <text>王淑芬</text><text>骨关节痛</text>
+        </view>
+        <view class="ml_content">请上传血常规报告</view>
+        <view class="ml_time">今天 16：32</view>
+      </view>
+    </view>
+    </view>
+    
+    <view>
+
+    </view>
+  </view>
+  </view>
+  
+
 <template is="tabBar" data="{{tabBar:tabBar}}"></template>
