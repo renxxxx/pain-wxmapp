@@ -19,8 +19,46 @@ App({
           method:'get',
           success(res){
             if(res.data.code==0){
+              // console.log(res.header['Set-Cookie'])
+              vm.globalData.cookie ='token='+ res.data.data.token
               vm.globalData.token=res.data.data.token
               console.log(vm.globalData.token)
+              wx.request({
+                url:vm.globalData.url + '/login-refresh',
+                header: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  'cookie': vm.globalData.cookie
+                },
+                data:{
+                  entrance:0
+                },
+                method:'get',
+                success(res){
+                  if(res.data.code==0){
+                        vm.globalData.loginRefresh=res.data.data
+                        if(res.data.data.lastEntrance==0){
+                          wx.switchTab({
+                            url: '/pages/index/index',
+                          })
+                        }else if(res.data.data.lastEntrance==1){
+                          wx.switchTab({
+                            url: '/pages/plIndex/plIndex',
+                          })
+                        }else{
+                          if(res.data.data.expert==0){
+                            wx.switchTab({
+                              url: '/pages/index/index',
+                            })
+                          }else{
+                            wx.switchTab({
+                              url: '/pages/plIndex/plIndex',
+                            })
+                          }
+                        }
+                        
+                  }
+                }
+              })
             }
           }
     
@@ -128,6 +166,8 @@ tabBarData: {
     height:0,
     url:'https://dev.inininininin.com/pain',
     mockUrl:'https://dev.inininininin.com',
-    token:''
+    token:'',
+    loginRefresh:{},
+    cookie:''
   }
 })

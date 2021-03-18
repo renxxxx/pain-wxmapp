@@ -9,7 +9,7 @@ Page({
     windowHeight: 0,
     userId:123,
     disease:{diseaseName:'头疼',diseaseId:''},
-    diseaseNo:'123123123',
+    diagnoseNo:'',
     diseaseMsg:[ {messageNo:1,createTime:'上午9:00',img:'../images/wzj1.jpg',txt:'',userNo:'123'},
     {messageNo:1,createTime:'上午9:00',img:'',txt:'你好吗你好吗你好吗你,好吗你好吗你好吗你好吗你好吗',userNo:'1234'},
     {messageNo:1,createTime:'上午9:00',img:'../images/wzj1.jpg',txt:'',userNo:'1234'},
@@ -132,13 +132,14 @@ Page({
     // that.pageScrollToBottom();
 
     wx.setNavigationBarTitle({
-      title: options.diseaseName+'('+that.data.diseaseNo+')',
+      title: options.diseaseName+'('+options.diagnoseNo+')',
     })
     let disease={}
      disease.diseaseName=options.diseaseName
      disease.diseaseId=options.diseaseId
      that.setData({
-      disease:disease
+      disease:disease,
+      diagnoseNo:options.diagnoseNo
     })
   },
   bindlinechange(e){

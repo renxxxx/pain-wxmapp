@@ -8,7 +8,28 @@ Page({
   data: {
     optionList:['']
   },
-
+  jumpUser(){
+    wx.request({
+      url:vm.globalData.url + '/login-refresh',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': vm.globalData.cookie
+      },
+      data:{
+        entrance:0
+      },
+      method:'get',
+      success(res){
+        if(res.data.code==0){
+              app.globalData.loginRefresh=res.data.data
+              wx.switchTab({
+                url: '../index/index',
+              })
+        }
+      }
+    })
+    
+  },  
   /**
    * 生命周期函数--监听页面加载
    */

@@ -7,9 +7,10 @@
       </view>
       <view class="t_content">
         <view class="t_contentBox">
-          <view class="tc_type">医生</view>
-          <view class="tc_nickname">昵称王二</view>
-          <view class="tc_name">真实姓名</view>
+         
+          <view class="tc_type line_1">普通用户</view>
+          <view class="tc_nickname line_1">{{userInfo.nickname||''}}</view>
+          <view class="tc_name line_1">{{userInfo.realname||''}}</view>
         </view>
       </view>
     </view>
@@ -18,7 +19,7 @@
     <view class="i_options" wx:for="{{optionList}}">
       <text>推出登录</text>
     </view>
-    <view class="i_options" >
+    <view class="i_options" wx:if="{{userInfo.expert==1}}" >
       <text>进入专家端</text>
     </view>
   </view>

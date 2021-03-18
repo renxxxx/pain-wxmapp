@@ -1,19 +1,19 @@
 <import src="../template/tabbar.wxml"/>
 <view class="painList">
-  <view class="painItem" wx:for="{{painList}}">
-    <image src="{{item.avator}}"></image>
-    <text>{{item.painName}}</text>
+  <view class="painItem"  wx:for="{{painList}}" data-id='{{item.userNo}}'>
+    <image src="{{item.portrait}}"></image>
+    <text class="line_1">{{item.realname||'某专家'}}</text>
   </view>
 </view>
 <!-- 提问列表 -->
   <view class="queList">
-    <view class="queItem"  wx:for="{{queList}}">
+    <view class="queItem"  wx:for="{{diagnosesList}}">
       <view>
-        <text class="ft_28 col_333" style="margin-right:30rpx">{{item.diagnoseNo}}</text>
-        <text class="ft_28 ">{{item.diseaseName}}</text>
+        <text class="ft_28 col_333" style="margin-right:30rpx">{{item.diagnoseNo||""}}</text>
+        <text class="ft_28 ">{{item.diseaseName||''}}</text>
         <!-- <image></image> -->
       </view>
-      <view style="margin-top:10rpx" class="ft_30 col_333 line_1" wx:if="{{item.lastMessage}}">{{item.lastMessage}}</view>
+      <view style="margin-top:10rpx" class="ft_30 col_333 line_1" wx:if="{{item.lastMsg.text}}">{{item.lastMsg.text||''}}</view>
       <view style="margin-top:10rpx" class="ft_28 col_666">{{item.createTime}}</view>
     </view>
   </view>
@@ -27,6 +27,9 @@
 <!-- 兵种弹窗 -->
 <view class="disease"  bindtap="closedisease" wx:if="{{diseaseShow}}">
   <view class="diseaseList" catchtap='thisShow' >
-    <view class="diseaseItem ft_30 col_333" bindtap="diseaseSure" wx:for="{{diseaseList}}" data-name='{{item.name}}' data-id="{{item.diseaseId}}">{{item.name}}</view>
+    <view class="diseaseItem ft_30 col_333" bindtap="diseaseSure" wx:for="{{diseaseList}}" data-name='{{item.name}}' data-id="{{item.diseaseNo}}">
+<image src="{{item.icon}}"></image>
+<text class="line_2">{{item.name}}</text>
+    </view>
   </view>
 </view>

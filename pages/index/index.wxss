@@ -88,3 +88,14 @@ page{
   display: inline-block;
   line-height: 80rpx;
 }
+.diseaseItem image{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  vertical-align: bottom;
+}
+.diseaseItem text{
+  /* display: block; */
+  width: 80%;
+  margin-left: 10%;
+}

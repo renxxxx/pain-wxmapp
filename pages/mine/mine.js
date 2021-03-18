@@ -6,14 +6,38 @@ Page({
    * 页面的初始数据
    */
   data: {
-    optionList:['']
+    optionList:[''],
+    userInfo:''
   },
-
+  jumpUser(){
+    wx.request({
+      url:vm.globalData.url + '/login-refresh',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': vm.globalData.cookie
+      },
+      data:{
+        entrance:1
+      },
+      method:'get',
+      success(res){
+        if(res.data.code==0){
+              app.globalData.loginRefresh=res.data.data
+              wx.switchTab({
+                url: '../plIndex/plIndex',
+              })
+        }
+      }
+    })
+    
+  },  
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.setData({
+      userInfo:app.globalData.loginRefresh
+    })
   },
 
   /**
