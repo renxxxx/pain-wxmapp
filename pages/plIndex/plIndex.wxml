@@ -18,8 +18,8 @@
         <text class="ft_28 ">{{item.diseaseName||''}}</text>
         <!-- <image></image> -->
       </view>
-      <view style="margin-top:10rpx" class="ft_30 col_333 line_1" wx:if="{{item.lastMsg.text}}">{{item.lastMsg.text||''}}</view>
-      <view style="margin-top:10rpx" class="ft_28 col_666">{{item.createTime}}</view>
+      <view style="margin-top:10rpx" class="ft_30 col_999 line_1" wx:if="{{item.lastMsg.text}}">{{item.lastMsg.text||''}}</view>
+      <view style="margin-top:10rpx" class="ft_28 col_999">{{item.createTime}}</view>
     </view>
   </view>
   <!-- 上拉加载更多 -->

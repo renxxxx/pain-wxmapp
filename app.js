@@ -11,7 +11,6 @@ App({
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        console.log(res.code)
         wx.request({
           url:vm.globalData.url + '/login-by-wxmapp',
           data:{
@@ -20,10 +19,8 @@ App({
           method:'get',
           success(res){
             if(res.data.code==0){
-              // console.log(res.header['Set-Cookie'])
               vm.globalData.cookie ='token='+ res.data.data.token
               vm.globalData.token=res.data.data.token
-              console.log(vm.globalData.token)
               wx.request({
                 url:vm.globalData.url + '/login-refresh',
                 header: {
@@ -34,25 +31,14 @@ App({
                 success(res){
                   if(res.data.code==0){
                         vm.globalData.loginRefresh=res.data.data
-                        if(res.data.data.lastEntrance==0){
-                          wx.switchTab({
-                            url: '/pages/index/index',
-                          })
-                        }else if(res.data.data.lastEntrance==1){
-                          console.log(111111)
+                        if(res.data.data.lastEntrance==1){
                           wx.switchTab({
                             url: '/pages/plIndex/plIndex',
                           })
-                        }else{
-                          if(res.data.data.expert==0){
-                            wx.switchTab({
-                              url: '/pages/index/index',
-                            })
-                          }else{
-                            wx.switchTab({
-                              url: '/pages/plIndex/plIndex',
-                            })
-                          }
+                        }else {
+                          wx.switchTab({
+                            url: '/pages/index/index',
+                          })
                         }
                         
                   }
@@ -72,7 +58,6 @@ App({
         let clientWidth = res.windowWidth;
         let changeHeight = 750 / clientWidth;
         let height = clientHeight * changeHeight;
-        console.log(res,height)
         vm.globalData.height=height
     }})
     

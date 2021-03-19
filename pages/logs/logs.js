@@ -60,7 +60,7 @@ Page({
            wx.hideLoading()
            if(diagnosesList.length<that.data.diagnosesPageSize){
             that.setData({
-              lastText:'数据已全部加载完成'
+              lastText:'已全部加载'
             })
            }else{
             that.setData({
@@ -71,7 +71,7 @@ Page({
           }else{
             wx.hideLoading()
             that.setData({
-              lastText:'数据已全部加载完成'
+              lastText:'已全部加载'
             })
           }
           
