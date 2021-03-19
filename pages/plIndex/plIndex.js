@@ -30,7 +30,7 @@ Page({
   diagnosesList(){
     let that = this
     wx.request({
-      url: app.globalData.url + '/diagnoses',
+      url: app.globalData.url + '/diagnoses-to-me',
       method: 'get',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
