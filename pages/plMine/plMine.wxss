@@ -4,12 +4,11 @@
   height: calc(100vh - 106rpx);
   margin: 0rpx;
   padding: 0rpx;
-  background-color: #f2f2f2;
-  /* border-top: 1rpx solid #e5e5e5; */
+  background-color: #F2F5FB;
 }
 .title{
   width: 100%;
-  height: 250rpx;
+  height: 306rpx;
   background-color: #FFFFFf;
   display: flex;
   vertical-align: left;
@@ -55,18 +54,86 @@
   height: 60rpx;
   line-height: 60rpx;
 }
-.list{
-  width: 100%;
-  height: calc(100% - 290rpx);
-  background-color: #FFFFFf;
-  margin-top: 20rpx;
-  overflow-y: scroll;
+
+.indexTitle {
+  width: 750rpx;
+  height: 306rpx;
+  background: #1296db;
 }
-.i_options{
-  height:90rpx;
-  line-height:90rpx;
-  border-bottom:1px solid #e2e2e2;
-  padding:0px 30rpx;
-  box-sizing:border-box;
-  cursor:pointer;
+
+.indexTitle>image {
+  width: 116rpx;
+  height: 116rpx;
+  background: #ffffff;
+  margin: 90rpx 317rpx 0;
+  border-radius: 50%;
+}
+
+.indexTitle>view {
+  display: block;
+  width: 100%;
+  text-align: center;
+  height: 50rpx;
+  font-size: 36rpx;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 400;
+  color: #ffffff !important;
+  line-height: 50rpx;
+}
+
+
+.linkList {
+  width: 100%;
+  background: #ffffff;
+  margin-top: 20rpx;
+  height: auto;
+}
+
+.linkList>view {
+  width: 718rpx;
+  height: 104rpx;
+  box-sizing: border-box;
+  border-bottom: 1rpx solid #e5e5e5;
+  line-height: 104rpx;
+  margin-left: 32rpx;
+
+}
+
+.linkList>view text {
+  font-size: 34rpx;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 400;
+  text-align: left;
+  color: #333333;
+  letter-spacing: 1rpx;
+}
+
+.linkList>view image {
+  width: 16rpx;
+  height: 26rpx;
+  float: right;
+  margin: 39rpx 36rpx 39rpx 0;
+}
+
+.linkList>view:last-child {
+  border-bottom: 0;
+}
+.linkList>view  button{
+  color: #0050cc;
+  font-weight: 100;
+  /* left: 225rpx; */
+  padding: 0;
+  background: rgba(144,116,58,0);
+}
+.linkList>view  button:not([size='mini']) {
+  width: 100%;
+  height: 104rpx;
+  line-height: 104rpx;
+  /* line-height: 90rpx; */
+  text-align: center;
+  /* border-radius: 45rpx; */
+  margin:0;
+}
+.linkList>view  button text{
+  float: left;
 }

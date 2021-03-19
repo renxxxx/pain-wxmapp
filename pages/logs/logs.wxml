@@ -1,18 +1,27 @@
 <import src="../template/tabbar.wxml"/>
-<!-- 提问列表 -->
+<view wx:if='{{loginIs}}'>
+  <!-- 提问列表 -->
 <view class="queList">
-    <view class="queItem"  wx:for="{{queList}}">
-      <view>
-        <text class="ft_28 col_333" style="margin-right:30rpx">{{item.diagnoseNo}}</text>
-        <text class="ft_28 ">{{item.diseaseName}}</text>
+  <view class="queItem"  wx:for="{{diagnosesList}}" data-fromuserno='{{item.fromUserNo}}' data-touserno='{{item.toUserNo}}' data-user='{{item}}' bindtap="jumpThis">
+      <view >
+        <text class="ft_28 col_333" style="margin-right:30rpx">{{item.diagnoseNo||""}}</text>
+        <text class="ft_28 ">{{item.diseaseName||''}}</text>
         <!-- <image></image> -->
       </view>
-      <view style="margin-top:10rpx" class="ft_30 col_333 line_1" wx:if="{{item.lastMessage}}">{{item.lastMessage}}</view>
-      <view style="margin-top:10rpx" class="ft_28 col_666">{{item.createTime}}</view>
+      <view style="margin-top:10rpx" class="ft_30 col_999 line_1" wx:if="{{item.lastMsg.text}}">{{item.lastMsg.text||''}}</view>
+      <view style="margin-top:10rpx" class="ft_28 col_999">{{item.createTime}}</view>
     </view>
   </view>
   <!-- 上拉加载更多 -->
 <view class="lastText" >{{lastText}}</view>
 <view style="height:150rpx;width:100%"></view>
+</view>
 
+
+
+<view wx:if='{{!loginIs}}'>
+	<image src="../images/quexing.png" class="bgImg"></image>
+	<text class="loginTitle">点击登录获取信息</text>
+	<view class="gologinBtn" bindtap="gologinBtn">去登陆</view>
+</view>
 <template is="tabBar" data="{{tabBar:tabBar}}"></template>

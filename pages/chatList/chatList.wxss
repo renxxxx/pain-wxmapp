@@ -31,8 +31,8 @@ page{
   margin-top: 35rpx;
 }
 .chatItem .img{
-  width: 240rpx;
-  /* max-height: 160rpx; */
+  max-width: 240rpx;
+  max-height: 160rpx;
   border-radius: 8rpx;
 }
 .avator{

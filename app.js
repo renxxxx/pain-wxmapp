@@ -6,6 +6,7 @@ App({
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
     wx.hideTabBar()
+    let vm=this
     // 登录
     wx.login({
       success: res => {
@@ -27,10 +28,7 @@ App({
                 url:vm.globalData.url + '/login-refresh',
                 header: {
                   "Content-Type": "application/x-www-form-urlencoded",
-                  'cookie': vm.globalData.cookie
-                },
-                data:{
-                  entrance:0
+                  'cookie': wx.getStorageSync('cookie')
                 },
                 method:'get',
                 success(res){
@@ -41,6 +39,7 @@ App({
                             url: '/pages/index/index',
                           })
                         }else if(res.data.data.lastEntrance==1){
+                          console.log(111111)
                           wx.switchTab({
                             url: '/pages/plIndex/plIndex',
                           })
@@ -65,7 +64,7 @@ App({
         })
       }
     })
-    let vm=this
+
     wx.getSystemInfo({
       success: function (res) {
 
@@ -103,7 +102,7 @@ tabBarData: {
   pop: 2,
   num: 0,
   doctor: {
-    "color": "#dbdbdb",
+    "color": "#999999",
     "selectedColor": "#1296db",
     "backgroundColor": "white",
     "borderStyle": "#eee",
@@ -119,7 +118,7 @@ tabBarData: {
       },
       {
         "pagePath": "/pages/logs/logs",
-        "text": "记录",
+        "text": "问诊记录",
         "iconPath": "/pages/images/jl.png",
         "selectedIconPath": "/pages/images/jl1.png",
         "clas": "tabbar-item",
@@ -136,7 +135,7 @@ tabBarData: {
     ]
   },
   plan: {
-    "color": "#dbdbdb",
+    "color": "#999999",
     "selectedColor": "#1296db",
     "backgroundColor": "white",
     "borderStyle": "white",
@@ -144,7 +143,7 @@ tabBarData: {
     "list": [
       {
         "pagePath": "/pages/plIndex/plIndex",
-        "text": "首页",
+        "text": "会诊",
         "iconPath": "/pages/images/sy.png",
         "selectedIconPath": "/pages/images/sy1.png",
         "clas": "tabbar-item",
@@ -165,9 +164,11 @@ tabBarData: {
     userInfo: null,
     height:0,
     url:'https://dev.inininininin.com/pain',
+    imgUrl:'https://dev.inininininin.com',
     mockUrl:'https://dev.inininininin.com',
     token:'',
     loginRefresh:{},
-    cookie:''
+    cookie:'',
+    version:'1.0.0'
   }
 })

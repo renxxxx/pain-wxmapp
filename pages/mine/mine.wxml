@@ -1,28 +1,43 @@
-<import src="../template/tabbar.wxml"/>
+<import src="../template/tabbar.wxml" />
 <view class="mine">
   <view class="title">
-    <view class="titleBox">
-      <view class="t_cover">
-        <image ></image>
+    <view wx:if="{{!loginIs}}" class="indexTitle">
+      <image mode="acpectFill" src="../images/patient.png"></image>
+      <view  class="gologin" bindtap="gologin">点击登录</view>
+    </view>
+    <view class="titleBox" wx:if="{{loginIs}}">
+     
+      <view class="t_cover" style="border-radius:50%">
+        <open-data  type="userAvatarUrl" class="img"></open-data>
+        <!-- <image  src="{{userInfo.headimg||''}}"></image> -->
       </view>
       <view class="t_content">
-        <view class="t_contentBox">
-         
-          <view class="tc_type line_1">普通用户</view>
-          <view class="tc_nickname line_1">{{userInfo.nickname||''}}</view>
-          <view class="tc_name line_1">{{userInfo.realname||''}}</view>
+        <view class="t_contentBox" >
+
+          <view class="tc_type line_1 ft_28 col_666">普通用户</view>
+          <view class="tc_nickname line_1 ft_28 col_333">{{userInfo.nickname||''}}</view>
+          <view class="tc_name line_1 ft_30 col_333">{{userInfo.realname||''}}</view>
         </view>
       </view>
     </view>
   </view>
-  <view class="list">
-    <view class="i_options" wx:for="{{optionList}}">
-      <text>推出登录</text>
+  <view class="linkList">
+    <view>
+      <button open-type="contact" bindcontact="handleContact">
+        <text>联系客服</text>
+        <image src="../images/rightIcon.svg"></image>
+      </button>
     </view>
-    <view class="i_options" wx:if="{{userInfo.expert==1}}" >
-      <text>进入专家端</text>
-    </view>
+    <view bindtap="jumpUser" wx:if='{{loginIs&&userInfo.expert==1}}'>
+		<text>进入专家端</text>
+		<image src="../images/rightIcon.svg"></image>
+	</view>
+    <view bindtap="loginOut" wx:if='{{loginIs==1}}'>
+		<text>退出登录</text>
+		<image src="../images/rightIcon.svg"></image>
+	</view>
+
   </view>
-  
+
 </view>
 <template is="tabBar" data="{{tabBar:tabBar}}"></template>

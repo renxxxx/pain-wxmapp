@@ -22,6 +22,7 @@ page{
   /* background-color: #ffffff; */
 }
 .painList{
+  height: 175rpx;
   position: fixed;
   top: 0;
   left: 0;
@@ -30,7 +31,8 @@ page{
   background: #ffffff;
   padding: 20rpx 0 20rpx 15rpx;
   box-sizing: border-box;
-  border-top: 1rpx solid #e5e5e5;
+  /* border-top: 1rpx solid #e5e5e5; */
+  box-shadow: 0rpx 5rpx 5rpx #F2F2F2;
 }
 
 .painItem{
@@ -38,13 +40,20 @@ page{
   height: auto;
   display: inline-block;
   text-align: center;
+ 
 }
 .painItem image{
-  width: 80rpx;
-  height: 80rpx;
+  width: 100rpx;
+  height: 100rpx;
   margin-bottom: 10rpx;
   display: block;
   margin-left: 20rpx;
+  /* vertical-align: bottom; */
+}
+.painItem view{
+  height: 34rpx;
+  line-height: 34rpx;
+
 }
 .queList{
   width: 100%;
@@ -56,9 +65,9 @@ page{
   height: auto;
   margin: 20rpx 20rpx 0;
   background-color: #ffffff;
-  padding: 24rpx;
+  padding: 10rpx 24rpx;
   box-sizing: border-box;
-  border-radius:8rpx ;
+  border-radius:12rpx ;
 }
 .queItem>view:nth-child(1){
   font-size: 28rpx;
@@ -77,16 +86,22 @@ page{
 .diseaseList{
   padding: 10% 0;
   width: 80%;
-  height: 80%;
+  height: auto;
+  max-height: 80%;
   margin: 10%;
   background-color: #ffffff;
   box-sizing: border-box;
+  overflow-y: auto;
+  border-radius: 8rpx;
 }
 .diseaseItem{
   width: 50%;
   text-align: center;
   display: inline-block;
   line-height: 80rpx;
+  height: 180rpx;
+  overflow: hidden;
+  margin-bottom: 40rpx;
 }
 .diseaseItem image{
   width: 100rpx;

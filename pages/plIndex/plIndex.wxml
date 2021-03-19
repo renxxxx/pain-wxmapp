@@ -1,39 +1,35 @@
 <import src="../template/tabbar.wxml"/>
-  <view class="index"> 
-    <view class="title">
-      <view class="titleBox">
-          <text class="title_left" style="animation-name:{{noAnimationName}}" bindtap="noDealWithFn" data-status="0">未处理</text>
-          <text class="title_right" style="animation-name:{{yesAnimationName}}" bindtap="noDealWithFn" data-status="1">已处理</text>
-      </view>
-      <text class="slider" style="transform:translateX({{transformWidth? transformWidth+'px':'100%'}}) translateX(-100%)"></text>
-  </view>
-  <view class="content">
-    <view class="content_slider" style="transform:translateX({{sliderLeft}}px)">
-      <view class="slider_left" style="width:{{sliderWidth? sliderWidth+'px':'100%'}};">
-        <view class="messageList" wx:for="{{message}}">
-          <view class="ml_title">
-            <text>王淑芬</text><text>骨关节痛</text>
-          </view>
-          <view class="ml_content">请上传血常规报告</view>
-          <view class="ml_time">今天 16：32</view>
-        </view>
-    </view>
-    <view class="slider_right" style="width:{{sliderWidth? sliderWidth+'px':'100%'}};">
-      <view class="messageList" wx:for="{{message}}">
-        <view class="ml_title">
-          <text>王淑芬</text><text>骨关节痛</text>
-        </view>
-        <view class="ml_content">请上传血常规报告</view>
-        <view class="ml_time">今天 16：32</view>
-      </view>
-    </view>
-    </view>
-    
-    <view>
+<!-- <page-meta>
+  <navigation-bar
+    title="{{nbTitle}}"
+    loading="{{nbLoading}}"
+    front-color="{{nbFrontColor}}"
+    background-color="{{nbBackgroundColor}}"
+    color-animation-duration="2000"
+    color-animation-timing-func="easeIn"
+  />
+</page-meta> -->
 
+<!-- 提问列表 -->
+  <view class="queList">
+    <view class="queItem"  wx:for="{{diagnosesList}}" data-user='{{item}}' bindtap="jumpThis">
+      <view >
+        <text class="ft_28 col_333" style="margin-right:30rpx">{{item.diagnoseNo||""}}</text>
+        <text class="ft_28 ">{{item.diseaseName||''}}</text>
+        <!-- <image></image> -->
+      </view>
+      <view style="margin-top:10rpx" class="ft_30 col_333 line_1" wx:if="{{item.lastMsg.text}}">{{item.lastMsg.text||''}}</view>
+      <view style="margin-top:10rpx" class="ft_28 col_666">{{item.createTime}}</view>
     </view>
   </view>
-  </view>
-  
+  <!-- 上拉加载更多 -->
+<view class="lastText" >{{lastText}}</view>
+<view style="height:230rpx;width:100%"></view>
 
 <template is="tabBar" data="{{tabBar:tabBar}}"></template>
+
+
+
+<!-- <loading hidden="{{hidden}}">
+    加载中...
+</loading> -->

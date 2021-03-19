@@ -3,26 +3,27 @@
   <text class="ft_30 col_333" id='{{disease.diseaseId}}'>sad{{disease.diseaseName}}</text>
   <text  class="ft_28 col_999">{{diseaseNo}}</text>
 </view> -->
-<scroll-view id="page"  style='height: {{scrollHeightEnd}}rpx' scroll-into-view="{{toView}}" scroll-with-animation='true' scroll-y="true" upper-threshold="100" scroll-top="{{scrollTop}}" enable-back-to-top="true" bindscrolltolower="lower" >
+<scroll-view id="page"   bindscrolltoupper='scrollUpper'  style='height: {{scrollHeightEnd}}rpx' scroll-into-view="{{toView}}" scroll-with-animation='true' scroll-y="true" upper-threshold="100" scroll-top="{{scrollTop}}" enable-back-to-top="true" bindscrolltolower="lower" >
   <view class="chatBox lf">
-    <view class="chatItem lf" id="item{{index}}"  style="width:100%" wx:for="{{diseaseMsg}}">
-      <view  wx:if="{{item.userNo!=userId}}">
-        <image class="avator lf"  src="../images/tx1.png"></image>
-        <text class="sj1 lf"></text>
-        <text class="ft_28 col_333 lf txt wordBreak" wx:if="{{item.txt}}">{{item.txt}}</text>
-        
-        <image bindtap="previewImage" data-src='{{item.img}}' class="lf img"  mode="aspecill"  wx:if="{{item.img}}" src="{{item.img}}"></image>
-        <!-- <text class="ft_28 col_999">{{item.createTime}}</text> -->
-      </view>
-      <view wx:if="{{item.userNo==userId}}">
+    <view class="chatItem lf" id="item{{index}}"  style="width:100%" wx:for="{{msgsList}}"  data-us='{{item.userNo}}' data-id='{{userNo}}'>
+      <view wx:if="{{item.userNo==userNo}}">
         <image class="avator rt"   src="../images/tx2.png"></image>
-        <text class="sj2 rt "  wx:if="{{item.txt}}"></text>
-        <text class="ft_28 col_333 rt txt wordBreak wordMe"  wx:if="{{item.txt}}">{{item.txt}}</text>
+        <text class="sj2 rt "  wx:if="{{item.text}}"></text>
+        <text class="ft_28 col_333 rt txt wordBreak wordMe"  wx:if="{{item.text}}">{{item.text}}</text>
         
-        <image  bindtap="previewImage" data-src='{{item.img}}' class="rt img"  mode="aspecill" src="{{item.img}}"  wx:if="{{item.img}}"></image>
+        <image  bindtap="previewImage" data-src='{{item.img}}' class="rt img"  mode="aspectFill" src="{{item.img}}"  wx:if="{{item.img}}"></image>
         
         <!-- <text class="ft_28 col_999">{{item.createTime}}</text> -->
       </view>
+      <view  wx:if="{{item.userNo!=userNo}}">
+        <image class="avator lf"  src="../images/tx1.png"></image>
+        <text class="sj1 lf" wx:if="{{item.text}}"></text>
+        <text class="ft_28 col_333 lf txt wordBreak" wx:if="{{item.text}}">{{item.text}}</text>
+        
+        <image bindtap="previewImage" data-src='{{item.img}}' class="lf img" mode="aspectFill"  wx:if="{{item.img}}" src="{{item.img}}"></image>
+        <!-- <text class="ft_28 col_999">{{item.createTime}}</text> -->
+      </view>
+      
     </view>
 </view>
 </scroll-view>
@@ -30,7 +31,7 @@
 <view class="chatNow">
   
   <view>
-    <textarea maxlength='1000' confirm-type='send'  show-confirm-bar = "{{false}}" bindlinechange='bindlinechange' bindconfirm='sendMsg'  auto-height='true' adjust-position='true' confirm-hold="true" class="textarea ft_28 col_333"  contenteditable="true" name="" id="" cols="30" rows="10" value="{{sendMsg}}"></textarea>
-    <image class="sendPic" bindtap="sendPic" src="../images/picture.png"></image>
+    <textarea maxlength='1000' bindfocus='bindfocus' confirm-type='send'  show-confirm-bar = "{{false}}" bindlinechange='bindlinechange' bindconfirm='sendMsg'  auto-height='true' adjust-position='{{true}}' confirm-hold="true" class="textarea ft_28 col_333"  contenteditable="true" name="" id="" cols="30" rows="10" bindinput="sendMsgBind" value="{{sendMsg}}"></textarea>
+    <image class="sendPic" bindtap="upimg" src="../images/picture.png"></image>
   </view>
 </view>

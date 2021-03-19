@@ -1,0 +1,28 @@
+<!--pages/login/login.wxml-->
+<view>  
+  <image class="avator" src="../images/patient.png"></image>
+  <text class="title">疼痛诊疗</text>
+  	<button class="loginWx"  open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+      <!-- <image src="../img/weixin@2x.png" mode="aspectFill"></image> -->
+       微信账号快捷登录
+     </button>
+     <!-- <text class="loginPhone">输入手机号登录/注册</text> -->
+
+<view class="popWindow" wx:if='{{showIs}}'>
+	<view>
+		<!-- <text>微信授权登录</text> -->
+		<view>
+			<import src="../../wxParse/wxParse.wxml" />
+			<view class="wxParse">
+				<template is="wxParse" data="{{wxParseData:article.nodes}}" />
+			</view>
+
+		</view>
+		<view>
+			<button class="refuse" bindtap="refuse">不同意</button>
+			<button class="agree" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">同意</button>
+		</view>
+	</view>
+</view>
+<text class="version" bindtap="version">ver : {{version}}</text>
+</view>
