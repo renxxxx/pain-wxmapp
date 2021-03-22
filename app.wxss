@@ -99,3 +99,10 @@
 .wordBreak{
   word-break: break-all;
 }
+
+.lastMsgPic{
+  width: 50rpx;
+  height: 40rpx;
+  /* padding:10rpx 0; */
+  /* float: left; */
+}

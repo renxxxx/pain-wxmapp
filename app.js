@@ -19,8 +19,7 @@ App({
           method:'get',
           success(res){
             if(res.data.code==0){
-              vm.globalData.cookie ='token='+ res.data.data.token
-              vm.globalData.token=res.data.data.token
+              wx.setStorageSync('cookie', res.header['Set-Cookie'])
               wx.request({
                 url:vm.globalData.url + '/login-refresh',
                 header: {
@@ -103,7 +102,7 @@ tabBarData: {
       },
       {
         "pagePath": "/pages/logs/logs",
-        "text": "问诊记录",
+        "text": "提问记录",
         "iconPath": "/pages/images/jl.png",
         "selectedIconPath": "/pages/images/jl1.png",
         "clas": "tabbar-item",

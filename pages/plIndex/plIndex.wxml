@@ -18,6 +18,9 @@
         <text class="ft_28 ">{{item.diseaseName||''}}</text>
         <!-- <image></image> -->
       </view>
+      <view style="margin-top:10rpx;height:40rpx" class="ft_30 col_999 line_1" wx:if="{{item.lastMsg.img}}">
+      <image class="lastMsgPic" src="../images/picture1.png"></image>
+    </view>
       <view style="margin-top:10rpx" class="ft_30 col_999 line_1" wx:if="{{item.lastMsg.text}}">{{item.lastMsg.text||''}}</view>
       <view style="margin-top:10rpx" class="ft_28 col_999">{{item.createTime}}</view>
     </view>

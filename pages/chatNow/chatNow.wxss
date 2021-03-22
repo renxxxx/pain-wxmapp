@@ -32,7 +32,7 @@ page{
 }
 .chatItem .img{
   width: 240rpx;
-  /* max-height: 160rpx; */
+  height: 160rpx;
   border-radius: 8rpx;
 }
 .avator{
@@ -91,14 +91,14 @@ margin-right: -24rpx;
   width: 50rpx;
   height: 40rpx;
   padding:30rpx 30rpx;
-  float: right;
+  float: left;
 }
 .chatNow > view{
   height: 130rpx;
   width: 100%;
 }
 .textarea{
-  width: 584rpx;
+  width: 474rpx;
   float: left;
   /* height: 80rpx; */
   /* height: auto; */
@@ -124,3 +124,17 @@ text-overflow: ellipsis;
 word-wrap: break-word;
 }
 
+.sendMsg{
+  width: 100rpx;
+  height:60rpx ;
+  border-radius: 8rpx;
+  background: #1296db;
+  color: #ffffff;
+  float: left;
+  text-align: center;
+  line-height: 60rpx;
+  margin-top:20rpx;
+}
+/* #page{
+  background: #95ec69;
+} */

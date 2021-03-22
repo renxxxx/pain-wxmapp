@@ -97,11 +97,12 @@ page{
 .diseaseItem{
   width: 50%;
   text-align: center;
-  display: inline-block;
+  /* display: inline-block; */
   line-height: 80rpx;
   height: 180rpx;
   overflow: hidden;
   margin-bottom: 40rpx;
+  float: left;
 }
 .diseaseItem image{
   width: 100rpx;

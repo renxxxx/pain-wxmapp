@@ -35,7 +35,8 @@ Page({
     //格式示例数据，可为空
     allContentList: [],
     msgsList:[],//相当于allContentList
-    num: 0
+    num: 0,
+    focus:false
   },
 
     // 聊天列表
@@ -188,7 +189,7 @@ Page({
     that.setData({
       scrollHeight: height,
       scrollTop: height,
-      scrollHeightEnd:height-that.data.chatBoxBottom,
+      scrollHeightEnd:height-130,
       
     })
     that.setData({
@@ -208,23 +209,22 @@ Page({
     })
     that.msgsList()
   },
-  bindlinechange(e){
-    this.setData({
-      chatBoxBottom:e.detail.heightRpx+66,
-      // scrollHeightEnd:e.detail.heightRpx+66<212?app.globalData.height-this.data.chatBoxBottom:app.globalData.height-212,
-    })
 
-  },
-  // bindfocus	(e){
-  //   console.log(e.detail,e.detail.height)
-   
+  // bindfocusEn	(e){   
+  //   console.log(e.detail.height*2)
   //   this.setData({
-  //     // chatBoxBottom:e.detail.heightRpx+66,
-  //     scrollHeightEnd:app.globalData.height-parseInt(e.detail.height),
+  //     bottom:e.detail.height*2,
+  //   })
+  // },
+  // // 屎渠焦点
+  // bindblurEn:function (e) {
+  //   this.setData({
+  //     bottom: 0
   //   })
   //   // wx.showToast({
-  //   //   title: '1231321'+this.data.scrollHeightEnd,
-  //   //   icon:'loading'
+  //   //   title: e.detail.height+'='+app.globalData.height+'='+this.data.scrollHeightEnd,
+  //   //   icon:'loading',
+  //   //   duration:3000
   //   // })
   // },
   /**
@@ -326,7 +326,9 @@ Page({
   sendMsg(e){
     let msgsList=this.data.msgsList
     // msgsList.push({messageNo:2,createTime:'3分钟前',img:'',txt:e.detail.value,userNo:'123'})
-   
+   if(!this.data.sendMsg){
+     return
+   }
 // console.log(this.data.sendMsg)
     let that = this;
     var data = {
@@ -351,7 +353,8 @@ Page({
       this.setData({
         msgsList:msgsList,
         toView:`item${this.data.msgsList.length-1}`,
-        sendMsg:''
+        sendMsg:'',
+        focus:false
       })
     }
   },
@@ -431,13 +434,7 @@ Page({
     })
  
   },
-  // 获取hei的id节点然后屏幕焦点调转到这个节点  
-  bottom: function () {
-    var that = this;
-    this.setData({
-      scrollTop: 1000000
-    })
-  },
+
 
   /**
    * 生命周期函数--监听页面隐藏
@@ -452,7 +449,9 @@ Page({
   onUnload: function () {
 
   },
-
+  bindscrolltoupper(e){
+    this.msgsList()
+  },
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */

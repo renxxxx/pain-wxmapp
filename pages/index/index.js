@@ -46,6 +46,9 @@ Page({
           let diagnosesStart=that.data.diagnosesStart,diagnosesList=that.data.diagnosesList
           if(res.data.data.diagnoses&&res.data.data.diagnoses.length>0){
             for(var i in res.data.data.diagnoses){
+              // if(res.data.data.diagnoses[i].lastMsg&&res.data.data.diagnoses[i].lastMsg.img){
+              //   res.data.data.diagnoses[i].lastMsg.img=app.globalData.imgUrl+res.data.data.diagnoses[i].lastMsg.img
+              // }
               diagnosesStart=res.data.data.diagnoses[i].diagnoseNo
               res.data.data.diagnoses[i].createTime= utils.getDateDiff(Date.parse(utils.renderTime(res.data.data.diagnoses[i].createTime).replace(/-/gi,"/")))
              console.log(utils.renderTime(res.data.data.diagnoses[i].createTime),res.data.data.diagnoses[i].createTime)

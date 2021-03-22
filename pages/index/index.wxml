@@ -1,4 +1,4 @@
-<import src="../template/tabbar.wxml"/>
+<import src="../template/tabbar.wxml" />
 <!-- <page-meta>
   <navigation-bar
     title="{{nbTitle}}"
@@ -10,35 +10,40 @@
   />
 </page-meta> -->
 <view class="painList">
-  <view class="painItem"  wx:for="{{painList}}" data-id='{{item.userNo}}'>
-    <image  mode="aspectFill"  style="border-radius:50%" src="{{item.portrait}}"></image>
+  <view class="painItem" wx:for="{{painList}}" data-id='{{item.userNo}}'>
+    <image mode="aspectFill" style="border-radius:50%" src="{{item.portrait}}"></image>
     <view class="line_1 ft_28">{{item.realname}}</view>
   </view>
 </view>
 <!-- 提问列表 -->
-  <view class="queList">
-    <view class="queItem"  wx:for="{{diagnosesList}}" data-user='{{item}}' bindtap="jumpThis">
-      <view >
-        <text class="ft_28 col_333" style="margin-right:30rpx">{{item.diagnoseNo||""}}</text>
-        <text class="ft_28 ">{{item.diseaseName||''}}</text>
-      </view>
-      <view style="margin-top:10rpx" class="ft_30 col_999 line_1" wx:if="{{item.lastMsg.text}}">{{item.lastMsg.text||''}}</view>
-      <view style="margin-top:10rpx" class="ft_28 col_999">{{item.createTime}}</view>
+<view class="queList">
+  <view class="queItem" wx:for="{{diagnosesList}}" data-user='{{item}}' bindtap="jumpThis">
+    <view>
+      <text class="ft_28 col_333" style="margin-right:30rpx">{{item.diagnoseNo||""}}</text>
+      <text class="ft_28 ">{{item.diseaseName||''}}</text>
     </view>
+    <view style="margin-top:10rpx;height:40rpx" class="ft_30 col_999 line_1" wx:if="{{item.lastMsg.img}}">
+      <image class="lastMsgPic" src="../images/picture1.png"></image>
+    </view>
+    <view style="margin-top:10rpx" class="ft_30 col_999 line_1" wx:if="{{item.lastMsg.text}}">{{item.lastMsg.text||''}}
+    </view>
+    <view style="margin-top:10rpx" class="ft_28 col_999">{{item.createTime}}</view>
   </view>
-  <!-- 上拉加载更多 -->
-<view class="lastText" >{{lastText}}</view>
+</view>
+<!-- 上拉加载更多 -->
+<view class="lastText">{{lastText}}</view>
 <view style="height:230rpx;width:100%"></view>
 
 <view class="askQue" bindtap="askQue">向专家提问 ＋</view>
 <template is="tabBar" data="{{tabBar:tabBar}}"></template>
 
 <!-- 兵种弹窗 -->
-<view class="disease"  bindtap="closedisease" wx:if="{{diseaseShow}}">
-  <view class="diseaseList" catchtap='thisShow' >
-    <view class="diseaseItem ft_30 col_333" bindtap="diseaseSure" wx:for="{{diseaseList}}" data-name='{{item.name}}' data-id="{{item.diseaseNo}}">
-<image mode="aspectFill" src="{{item.icon}}"></image>
-<text class="line_1">{{item.name}}</text>
+<view class="disease" bindtap="closedisease" wx:if="{{diseaseShow}}">
+  <view class="diseaseList" catchtap='thisShow'>
+    <view class="diseaseItem ft_30 col_333" bindtap="diseaseSure" wx:for="{{diseaseList}}" data-name='{{item.name}}'
+      data-id="{{item.diseaseNo}}">
+      <image mode="aspectFill" src="{{item.icon}}"></image>
+      <text class="line_1">{{item.name}}</text>
     </view>
   </view>
 </view>
@@ -46,3 +51,5 @@
 <!-- <loading hidden="{{hidden}}">
     加载中...
 </loading> -->
+
+<!-- <view style="position:absolute;height:368rpx;width:100%;background:blue;bottom:0;left:0"></view> -->

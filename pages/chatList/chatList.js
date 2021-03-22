@@ -38,7 +38,6 @@ Page({
     })
   },
   scrollUpper(e) {
-    console.log(1213)
     this.msgsList()
   },
   // 聊天详情
@@ -211,7 +210,6 @@ Page({
   onUnload: function () {
 
   },
-
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */

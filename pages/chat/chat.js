@@ -1,176 +1,102 @@
-var app = getApp();
-var socketOpen = false;
-var frameBuffer_Data, session, SocketTask;
-console.log(app.globalData.token)
-var url = 'wss://dev.inininininin.com/pain/websocket/';
-var upload_url ='请填写您的图片上传接口地址'
+// pages/chat/chat.js
+// 获取小程序实例
+let app = getApp();
 Page({
-  data: {
-    user_input_text: '',//用户输入文字
-    inputValue: '',
-    returnValue: '',
-    addImg: false,
-    //格式示例数据，可为空
-    allContentList: [],
-    num: 0
-  },
-  // 页面加载
-  onLoad: function () {
-    this.bottom();
-  },
-  onShow: function (e) {
-    if (!socketOpen) {
-      this.webSocket()
-    }
-  },
-  // 页面加载完成
-  onReady: function () {
-    var that = this;
-    SocketTask.onOpen(res => {
 
-      socketOpen = true;
-      console.log('监听 WebSocket 连接打开事件。', res)
-    })
-    SocketTask.onClose(onClose => {
-      console.log('监听 WebSocket 连接关闭事件。', onClose)
-      socketOpen = false;
-      this.webSocket()
-    })
-    SocketTask.onError(onError => {
-      console.log('监听 WebSocket 错误。错误信息', onError)
-      socketOpen = false
-    })
-    SocketTask.onMessage(onMessage => {
-      console.log(onMessage.data)
-      // console.log('监听WebSocket接受到服务器的消息事件。服务器返回的消息', JSON.parse(onMessage.data))
-      var onMessage_data =onMessage.data// JSON.parse(onMessage.data)
-      if (onMessage_data.cmd == 1) {
-        that.setData({
-          link_list: text
-        })
-        console.log(text, text instanceof Array)
-        // 是否为数组
-        if (text instanceof Array) {
-          for (var i = 0; i < text.length; i++) {
-            text[i]
-          }
-        } else {
- 
-        }
-        that.data.allContentList.push({ is_ai: true, text: onMessage_data.body });
-        that.setData({
-          allContentList: that.data.allContentList
-        })
-        that.bottom()
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    nickname:'',
+    avatar:'',
+    chatlists:[
+      {
+        nickname:'小林',
+        avatar:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1591617971938&di=30d9f3b49a0d1b27fb4b61ea424f82c9&imgtype=0&src=http%3A%2F%2Fa-ssl.duitang.com%2Fuploads%2Fitem%2F201610%2F07%2F20161007135058_nUxji.jpeg',
+        content:`你好呀！`
       }
-    })
+    ],
+    invalue:''
   },
-  webSocket: function () {
-    console.log(app.globalData.token)
-    // 创建Socket
-    SocketTask = wx.connectSocket({
-      url: url+app.globalData.token,
-      data: 'data',
-      header: {
-        'content-type': 'application/json'
-      },
-      method: 'post',
-      success: function (res) {
-        console.log('WebSocket连接创建', res)
-        socketOpen = true
-      },
-      fail: function (err) {
-        wx.showToast({
-          title: '网络异常！',
-        })
-        console.log(err)
-      },
-    })
+  sendMsg:function(){
+    let _this = this;
+    let obj = {
+      nickname:_this.data.nickname,
+      avatar:_this.data.avatar,
+      content:_this.data.invalue
+    };
+    let arr = _this.data.chatlists;
+    arr.push(obj)
+    _this.setData({
+      chatlists:arr,
+      invalue:''
+    });
+
+    // 把聊天内容发送到服务器，处理完成后返回，再把返回的数据放到chatlist里面
+
   },
- 
-  // 提交文字
-  submitTo: function (e) {
-    let that = this;
-    var data = {
-      body: that.data.inputValue,
-    }
-    console.log(that.data.inputValue,socketOpen)
-    if (socketOpen) {
-      
-      // 如果打开了socket就发送数据给服务器
-      sendSocketMessage(data)
-      this.data.allContentList.push({ is_my: { text: this.data.inputValue }});
-      this.setData({
-        allContentList: this.data.allContentList,
-        inputValue: ''
-      })
- 
-      that.bottom()
-    }
+  getInput:function(e){
+    console.log(e.detail.value);
+    this.setData({invalue:e.detail.value});
   },
-  bindKeyInput: function (e) {
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    console.log(app.globalData.userInfo.nickName);
     this.setData({
-      inputValue: e.detail.value
-    })
+      nickname:app.globalData.userInfo.nickName,
+      avatar:app.globalData.userInfo.avatarUrl
+    });
   },
- 
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
   onHide: function () {
-    SocketTask.close(function (close) {
-      console.log('关闭 WebSocket 连接。', close)
-    })
+
   },
-  upimg: function () {
-    var that = this;
-      wx.chooseImage({
-        sizeType: ['original', 'compressed'],
-        success: function (res) {
-          that.setData({
-            img: res.tempFilePaths
-          })
-          wx.uploadFile({
-            url: upload_url,
-            filePath: res.tempFilePaths,
-            name: 'img',
-            success: function (res) {
-              console.log(res)
-                wx.showToast({
-                  title: '图片发送成功！',
-                  duration: 3000
-                });
-            }
-          })  
-          that.data.allContentList.push({ is_my: { img: res.tempFilePaths } });
-          that.setData({
-            allContentList: that.data.allContentList,
-          })
-          console.log(that.data.allContentList)
-          that.bottom();
-        }
-      })
-  },   
-  addImg: function () {
-    this.setData({
-      addImg: !this.data.addImg
-    })
- 
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
   },
-  // 获取hei的id节点然后屏幕焦点调转到这个节点  
-  bottom: function () {
-    var that = this;
-    this.setData({
-      scrollTop: 1000000
-    })
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
   },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  }
 })
- 
-//通过 WebSocket 连接发送数据，需要先 wx.connectSocket，并在 wx.onSocketOpen 回调之后才能发送。
-function sendSocketMessage(msg) {
-  var that = this;
-  console.log('通过 WebSocket 连接发送数据', JSON.stringify(msg))
-  console.log(SocketTask)
-  SocketTask.send({
-    data: JSON.stringify(msg)
-  }, function (res) {
-    console.log('已发送', res)
-  })
-} 
