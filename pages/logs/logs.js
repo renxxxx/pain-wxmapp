@@ -10,6 +10,7 @@ Page({
     diseaseList: '',
     lastText: '加载中…',
     loginIs:true,
+    shell:null
   },
   jumpThis(e){
 
@@ -86,6 +87,9 @@ Page({
   },
   onLoad() {
     this.diagnosesList()
+    this.setData({
+      shell:app.globalData.shell
+    })
   },
   onShow(){
     wx.hideTabBar({

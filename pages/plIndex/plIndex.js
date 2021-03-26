@@ -13,7 +13,8 @@ Page({
     diseaseShow: false,
     nbFrontColor: '#000000',
     nbBackgroundColor: '#ffffff',
-    userNo:''
+    userNo:'',
+    shell:null
     // hidden:false
   },
   jumpThis(e){
@@ -169,6 +170,7 @@ Page({
   },
   onLoad() {
     this.setData({
+      shell:app.globalData.shell,
       nbTitle: '新标题',
       nbLoading: false,
       nbFrontColor: '#ffffff',

@@ -13,7 +13,8 @@ Page({
     diseaseShow: false,
     nbFrontColor: '#000000',
     nbBackgroundColor: '#ffffff',
-    userNo:''
+    userNo:'',
+    shell:null,
     // hidden:false
   },
   jumpThis(e){
@@ -133,9 +134,33 @@ Page({
     })
   },
   askQue() {
-    this.setData({
-      diseaseShow: true
-    })
+    if(this.data.shell!=1){
+      this.setData({
+        diseaseShow: true
+      })
+    }else{
+      wx.request({
+        url: app.globalData.url + '/ask-diagnose',
+        method: 'get',
+         header: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          'cookie': wx.getStorageSync('cookie')
+        },
+        data:{
+          diseaseNo:'',
+        },
+        success(res) {
+          if (res.data.code == 0) {
+            let diagnoseNo=res.data.data.diagnoseNo
+            wx.navigateTo({
+              url: '../chatNow/chatNow?diseaseId=&diseaseName=&diagnoseNo=' + diagnoseNo,
+              // url: '../chat/chat?diseaseId='+e.currentTarget.dataset.id+'&diseaseName='+e.currentTarget.dataset.name,
+            })
+          }
+        }
+  
+      })
+    }
   },
   closedisease() {
     this.setData({
@@ -191,6 +216,22 @@ Page({
     wx.hideTabBar({
       success: function () {
         app.onTabBar('doctor');
+      }
+    })
+    var that=this
+    wx.request({
+      url: app.globalData.url+'/archive?name=shell',
+      method: 'get',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': wx.getStorageSync('cookie')
+      },
+      success(res){
+        console.log(res)
+        that.setData({
+          shell:res.data.data.archive.shell
+        })
+        app.globalData.shell=res.data.data.archive.shell
       }
     })
   },

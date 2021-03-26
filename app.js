@@ -147,12 +147,13 @@ tabBarData: {
   globalData: {
     userInfo: null,
     height:0,
-    url:'https://dev.inininininin.com/pain',
-    imgUrl:'https://dev.inininininin.com',
-    mockUrl:'https://dev.inininininin.com',
+    url:'https://www.njshangka.com/pain',
+    imgUrl:'https://www.njshangka.com',
+    mockUrl:'https://www.njshangka.com',
     token:'',
     loginRefresh:{},
     cookie:'',
-    version:'1.0.0'
+    version:'1.0.0',
+    shell:null,
   }
 })
