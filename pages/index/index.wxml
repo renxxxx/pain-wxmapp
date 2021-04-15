@@ -15,11 +15,18 @@
     <view class="line_1 ft_28">{{item.realname}}</view>
   </view>
 </view>
+<view class="searchBox" style="top:175rpx">
+  <view class="inputBox">
+    <input type="text"  bindinput="keyword" value="{{kw}}"/>
+  <icon hidden="{{kw==''}}" class="icon-small" catchtap="clearKw" type="cancel" size="30rpx" color="#666"></icon>
+  </view>
+  <view class="searchThis" bindtap="searchThis">搜索</view>
+</view>
 <!-- 提问列表 -->
 <view class="queList">
-  <view class="queItem" wx:for="{{diagnosesList}}" data-user='{{item}}' bindtap="jumpThis">
+  <view class="queItem   {{item.active}}" wx:for="{{diagnosesList}}" data-user='{{item}}' bindtap="jumpThis">
     <view>
-      <text class="ft_28 col_333" style="margin-right:30rpx">{{item.diagnoseNo||""}}</text>
+      <text class="ft_28 col_333" style="margin-right:30rpx">{{item.title||item.diagnoseNo||""}}</text>
       <text class="ft_28 " wx:if="{{shell!=1}}">{{item.diseaseName||''}}</text>
     </view>
     <view style="margin-top:10rpx;height:40rpx" class="ft_30 col_999 line_1" wx:if="{{item.lastMsg.img}}">

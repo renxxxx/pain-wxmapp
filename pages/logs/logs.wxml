@@ -1,11 +1,19 @@
 <import src="../template/tabbar.wxml"/>
-<view wx:if='{{loginIs}}'>
+
+<view wx:if='{{loginIs}}' >
+  <view class="searchBox">
+  <view class="inputBox">
+    <input type="text"  bindinput="keyword" value="{{kw}}"/>
+  <icon hidden="{{kw==''}}" class="icon-small" catchtap="clearKw" type="cancel" size="30rpx" color="#666"></icon>
+  </view>
+  <view class="searchThis" bindtap="searchThis">搜索</view>
+</view>
   <!-- 提问列表 -->
 <view class="queList">
-  <view class="queItem"  wx:for="{{diagnosesList}}" data-fromuserno='{{item.fromUserNo}}' data-touserno='{{item.toUserNo}}' data-user='{{item}}' bindtap="jumpThis">
+  <view class="queItem   {{item.active}}"  wx:for="{{diagnosesList}}" data-fromuserno='{{item.fromUserNo}}' data-touserno='{{item.toUserNo}}' data-user='{{item}}' bindtap="jumpThis">
       <view >
         <text class="ft_28 col_333" style="margin-right:30rpx">{{item.diagnoseNo||""}}</text>
-        <text class="ft_28 " wx:if="{{shell!=1}}">{{item.diseaseName||''}}</text>
+        <text class="ft_28 " wx:if="{{shell!=1}}">{{item.title||item.diseaseName||''}}</text>
         <!-- <image></image> -->
       </view>
       <view style="margin-top:10rpx;height:40rpx" class="ft_30 col_999 line_1" wx:if="{{item.lastMsg.img}}">

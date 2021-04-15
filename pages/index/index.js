@@ -15,9 +15,37 @@ Page({
     nbBackgroundColor: '#ffffff',
     userNo:'',
     shell:null,
+    kw:''
     // hidden:false
   },
+  keyword(e){
+    this.setData({
+      kw:e.detail.value
+    })
+  },
+  clearKw(e){
+    this.setData({
+      kw:''
+    })
+  },
+  searchThis(e){
+    wx.showLoading({title: '加载中…'})
+    this.setData({
+      diagnosesStart:'',
+      lastText:'上滑加载更多',
+      diagnosesList:[]
+    })
+    this.diagnosesList()
+  },
   jumpThis(e){
+    for(var i in this.data.diagnosesList){
+      if(this.data.diagnosesList[i].diagnoseNo==e.currentTarget.dataset.user.diagnoseNo){
+        this.data.diagnosesList[i].active='activeItem'
+      }
+    }
+    this.setData({
+      diagnosesList: this.data.diagnosesList
+    })
     if(app.globalData.loginRefresh.userNo==e.currentTarget.dataset.user.fromUserNo||app.globalData.loginRefresh.userNo==e.currentTarget.dataset.user.toUserNo){
       wx.navigateTo({
         url: '../chatNow/chatNow?diagnoseNo='+e.currentTarget.dataset.user.diagnoseNo+'&diseaseId='+e.currentTarget.dataset.user.diseaseNo+'&diseaseName=' + e.currentTarget.dataset.user.diseaseName,
@@ -38,6 +66,7 @@ Page({
         'cookie': wx.getStorageSync('cookie')
       },
       data:{
+        kw:that.data.kw,
         start:that.data.diagnosesList.length+1,
         pageSize:that.data.diagnosesPageSize,
       },
@@ -50,6 +79,7 @@ Page({
               // if(res.data.data.diagnoses[i].lastMsg&&res.data.data.diagnoses[i].lastMsg.img){
               //   res.data.data.diagnoses[i].lastMsg.img=app.globalData.imgUrl+res.data.data.diagnoses[i].lastMsg.img
               // }
+              res.data.data.diagnoses[i].active=''
               diagnosesStart=res.data.data.diagnoses[i].diagnoseNo
               res.data.data.diagnoses[i].createTime= utils.getDateDiff(Date.parse(utils.renderTime(res.data.data.diagnoses[i].createTime).replace(/-/gi,"/")))
              console.log(utils.renderTime(res.data.data.diagnoses[i].createTime),res.data.data.diagnoses[i].createTime)
@@ -285,6 +315,29 @@ Page({
        this.diagnosesList()
     }
   },
-
-  
+  onShareAppMessage: function () {
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
+    var path = '/pages/index/index'
+    return {
+      title: '欢迎使用医师互联小程序', //分享内容
+      path: path, //分享地址
+      imageUrl: 'https://njshangka.com/favicon.ico', //分享图片
+      success: function (res) {
+      },
+      fail: function (res) {
+      }
+    }
+  },
+  onShareTimeline: function () {
+		return {
+	      title: '欢迎使用医师互联小程序',
+	      // query: {
+	      //   id: this.data.id
+	      // },
+	      imageUrl: 'https://njshangka.com/favicon.ico',
+	    }
+	},
 })

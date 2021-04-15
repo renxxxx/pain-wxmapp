@@ -57,7 +57,7 @@ page{
 .queList{
   width: 100%;
   height: auto;
-  margin: 0 0 20rpx;
+  margin: 120rpx 0 20rpx;
 }
 .queList .queItem{
   width: 710rpx;
@@ -107,3 +107,26 @@ page{
   width: 80%;
   margin-left: 10%;
 }
+
+  .modifyTitle{
+    color: rgb(103, 20, 141);
+    padding: 15rpx 20rpx;
+    margin-top: -15rpx;
+  }
+  .modifyTitlePop{
+    position: fixed;
+    top: 0 ;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.8);
+    z-index: 2;
+  }
+  .modifyBox{
+    width: 600rpx;
+    height: 400rpx;
+    border-radius: 10rpx;
+    background-color: #ffffff;
+    margin: 200rpx 75rpx ;
+  }
+  

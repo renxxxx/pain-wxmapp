@@ -4,8 +4,8 @@ var utils = require('../../utils/util.js');
 var socketOpen = false;
 var frameBuffer_Data, session, SocketTask;
 console.log(app)
-var url = 'wss://dev.inininininin.com/pain/websocket/';
-var upload_url ='https://dev.inininininin.com/pain/upload'
+var url = 'wss://www.njshangka.com/pain/websocket/';
+var upload_url ='https://www.njshangka.com/pain/upload'
 Page({
 
   /**
@@ -470,8 +470,30 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
-  }
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
+    var path = '/pages/index/index'
+    return {
+      title: '欢迎使用医师互联小程序', //分享内容
+      path: path, //分享地址
+      imageUrl: 'https://njshangka.com/favicon.ico', //分享图片
+      success: function (res) {
+      },
+      fail: function (res) {
+      }
+    }
+  },
+  onShareTimeline: function () {
+		return {
+	      title: '欢迎使用医师互联小程序',
+	      // query: {
+	      //   id: this.data.id
+	      // },
+	      imageUrl: 'https://njshangka.com/favicon.ico',
+	    }
+	},
 })
 //通过 WebSocket 连接发送数据，需要先 wx.connectSocket，并在 wx.onSocketOpen 回调之后才能发送。
 function sendSocketMessage(msg) {

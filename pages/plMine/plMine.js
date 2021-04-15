@@ -139,6 +139,28 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
-  }
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
+    var path = '/pages/plMine/plMine'
+    return {
+      title: '欢迎使用医师互联小程序', //分享内容
+      path: path, //分享地址
+      imageUrl: 'https://njshangka.com/favicon.ico', //分享图片
+      success: function (res) {
+      },
+      fail: function (res) {
+      }
+    }
+  },
+  onShareTimeline: function () {
+		return {
+	      title: '欢迎使用医师互联小程序',
+	      // query: {
+	      //   id: this.data.id
+	      // },
+	      imageUrl: 'https://njshangka.com/favicon.ico',
+	    }
+	},
 })

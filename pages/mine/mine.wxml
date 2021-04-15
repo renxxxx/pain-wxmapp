@@ -14,7 +14,7 @@
       <view class="t_content">
         <view class="t_contentBox" >
 
-          <view class="tc_type line_1 ft_28 col_666">普通用户</view>
+          <view class="tc_type line_1 ft_28 col_666">用户端</view>
           <view class="tc_nickname line_1 ft_28 col_333">{{userInfo.nickname||''}}</view>
           <view class="tc_name line_1 ft_30 col_333">{{userInfo.realname||''}}</view>
         </view>

@@ -58,7 +58,7 @@ page{
 .queList{
   width: 100%;
   height: auto;
-  margin: 195rpx 0 20rpx;
+  margin: 295rpx 0 20rpx;
 }
 .queList .queItem{
   width: 710rpx;

@@ -10,10 +10,38 @@ Page({
     diseaseList: '',
     lastText: '加载中…',
     loginIs:true,
-    shell:null
+    shell:null,
+    kw:''
+    // hidden:false
+  },
+  keyword(e){
+    this.setData({
+      kw:e.detail.value
+    })
+  },
+  clearKw(e){
+    this.setData({
+      kw:''
+    })
+  },
+  searchThis(e){
+    wx.showLoading({title: '加载中…'})
+    this.setData({
+      diagnosesStart:'',
+      lastText:'上滑加载更多',
+      diagnosesList:[]
+    })
+    this.diagnosesList()
   },
   jumpThis(e){
-
+    for(var i in this.data.diagnosesList){
+      if(this.data.diagnosesList[i].diagnoseNo==e.currentTarget.dataset.user.diagnoseNo){
+        this.data.diagnosesList[i].active='activeItem'
+      }
+    }
+    this.setData({
+      diagnosesList: this.data.diagnosesList
+    })
     if(app.globalData.loginRefresh.userNo==e.currentTarget.dataset.fromuserno||app.globalData.loginRefresh.userNo==e.currentTarget.dataset.touserno){
       
       wx.navigateTo({
@@ -44,6 +72,7 @@ Page({
         'cookie': wx.getStorageSync('cookie')
       },
       data:{
+        kw:that.data.kw,
         start:that.data.diagnosesStart,
         pageSize:that.data.diagnosesPageSize,
       },
@@ -130,4 +159,29 @@ Page({
        this.diagnosesList()
     }
   },
+  onShareAppMessage: function () {
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
+    var path = '/pages/logs/logs'
+    return {
+      title: '欢迎使用医师互联小程序', //分享内容
+      path: path, //分享地址
+      imageUrl: 'https://njshangka.com/favicon.ico', //分享图片
+      success: function (res) {
+      },
+      fail: function (res) {
+      }
+    }
+  },
+  onShareTimeline: function () {
+		return {
+	      title: '欢迎使用医师互联小程序',
+	      // query: {
+	      //   id: this.data.id
+	      // },
+	      imageUrl: 'https://njshangka.com/favicon.ico',
+	    }
+	},
 })

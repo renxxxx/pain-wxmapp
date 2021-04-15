@@ -1,4 +1,11 @@
 <import src="../template/tabbar.wxml"/>
+<view class="searchBox">
+  <view class="inputBox">
+    <input type="text"  bindinput="keyword" value="{{kw}}"/>
+  <icon hidden="{{kw==''}}" class="icon-small" catchtap="clearKw" type="cancel" size="30rpx" color="#666"></icon>
+  </view>
+  <view class="searchThis" bindtap="searchThis">搜索</view>
+</view>
 <!-- <page-meta>
   <navigation-bar
     title="{{nbTitle}}"
@@ -12,10 +19,11 @@
 
 <!-- 提问列表 -->
   <view class="queList">
-    <view class="queItem"  wx:for="{{diagnosesList}}" data-user='{{item}}' bindtap="jumpThis">
+    <view class="queItem  {{item.active}}"  wx:for="{{diagnosesList}}" data-user='{{item}}' bindtap="jumpThis">
       <view >
         <text class="ft_28 col_333" style="margin-right:30rpx">{{item.diagnoseNo||""}}</text>
-        <text class="ft_28 " wx:if="{{shell!=1}}">{{item.diseaseName||''}}</text>
+        <text class="ft_28 " wx:if="{{shell!=1}}">{{item.title||item.diseaseName||''}}</text>
+          <text catchtab="jumpThis1"  class="rt modifyTitle"  wx:if="{{shell!=1}}" data-diseasename='{{item.diseaseName||""}}' data-diagnoseno='{{item.diagnoseNo||""}}'      catchtap='modifyTitle'>修改标题</text>
         <!-- <image></image> -->
       </view>
       <view style="margin-top:10rpx;height:40rpx" class="ft_30 col_999 line_1" wx:if="{{item.lastMsg.img}}">
@@ -31,8 +39,16 @@
 
 <template is="tabBar" data="{{tabBar:tabBar}}"></template>
 
+<modal hidden="{{hiddenmodalput}}" title="修改标题" confirm-text="提交" cancel-text="取消" bindcancel="cancelM" bindconfirm="confirmM">
+      <input style="border:1rpx solid #e5e5e5;height:80rpx;line-height:80rpx;padding:0 15rpx;color:#333" bindinput='iName' type='text' placeholder="请输入新标题" value="{{diseaseNameModify}}" auto-focus/>
+   </modal>
 
-
+<!-- <view class="modifyTitlePop">
+  <view class='modifyBox'>
+    <input type="text" value="{{diseaseNameModify}}">
+    <view>修改</view>
+  </view>
+</view> -->
 <!-- <loading hidden="{{hidden}}">
     加载中...
 </loading> -->
