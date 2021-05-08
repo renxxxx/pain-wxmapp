@@ -45,6 +45,7 @@ Page({
       
       wx.login({
         success(res) {
+          console.log(e.detail.userInfo.nickName)
           var code = res.code
           if(e.detail.userInfo.nickName!=null&&e.detail.userInfo.nickName!=undefined&&e.detail.userInfo.nickName!=''){
             wx.request({
@@ -56,7 +57,7 @@ Page({
               data: {
                 code: code,
                 nickname:e.detail.userInfo.nickName,
-                logo:e.detail.userInfo.avatarUrl,
+                headimg:e.detail.userInfo.avatarUrl,
               },
               success: function (res) {
                 wx.hideToast()

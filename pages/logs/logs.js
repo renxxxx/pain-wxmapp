@@ -83,7 +83,7 @@ Page({
           if(res.data.data.diagnoses&&res.data.data.diagnoses.length>0){
             for(var i in res.data.data.diagnoses){
               diagnosesStart=res.data.data.diagnoses[i].diagnoseNo
-              res.data.data.diagnoses[i].createTime= utils.getDateDiff(Date.parse(utils.renderTime(res.data.data.diagnoses[i].createTime).replace(/-/gi,"/")))
+              res.data.data.diagnoses[i].createTime= utils.getDateDiff(Date.parse(utils.renderTime(res.data.data.diagnoses[i].lastMsg.createTime).replace(/-/gi,"/")))
              console.log(utils.renderTime(res.data.data.diagnoses[i].createTime),res.data.data.diagnoses[i].createTime)
            }
            diagnosesList=that.data.diagnosesList.concat(res.data.data.diagnoses)
@@ -109,6 +109,18 @@ Page({
             diagnosesStart:diagnosesStart,
             diagnosesList: diagnosesList
           })
+        }else if(res.data.code == 20){
+          wx.showToast({
+            title: '请先登录',
+            icon:'none',
+            duration:1500,
+            success:function(){ wx.redirectTo({
+              url: '../login/login',
+            })},//接口调用成功
+            fail: function () { },  //接口调用失败的回调函数  
+            complete: function () { } //接口调用结束的回调函数  
+          })
+          
         }
       }
 

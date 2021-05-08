@@ -1,4 +1,5 @@
-<import src="../template/tabbar.wxml" />
+<view wx:if='{{!showPhone}}'>
+  <import src="../template/tabbar.wxml" />
 <!-- <page-meta>
   <navigation-bar
     title="{{nbTitle}}"
@@ -12,7 +13,7 @@
 <view class="painList">
   <view class="painItem" wx:for="{{painList}}" data-id='{{item.userNo}}'>
     <image mode="aspectFill" style="border-radius:50%" src="{{item.portrait}}"></image>
-    <view class="line_1 ft_28">{{item.realname}}</view>
+    <view class="line_1 ft_28">{{item.realname||''}}</view>
   </view>
 </view>
 <view class="searchBox" style="top:175rpx">
@@ -24,7 +25,7 @@
 </view>
 <!-- 提问列表 -->
 <view class="queList">
-  <view class="queItem   {{item.active}}" wx:for="{{diagnosesList}}" data-user='{{item}}' bindtap="jumpThis">
+  <view class="queItem   {{item.active}}" style="position:relative" wx:for="{{diagnosesList}}" data-user='{{item}}' bindtap="jumpThis">
     <view>
       <text class="ft_28 col_333" style="margin-right:30rpx">{{item.title||item.diagnoseNo||""}}</text>
       <text class="ft_28 " wx:if="{{shell!=1}}">{{item.diseaseName||''}}</text>
@@ -32,9 +33,14 @@
     <view style="margin-top:10rpx;height:40rpx" class="ft_30 col_999 line_1" wx:if="{{item.lastMsg.img}}">
       <image class="lastMsgPic" src="../images/picture1.png"></image>
     </view>
-    <view style="margin-top:10rpx" class="ft_30 col_999 line_1" wx:if="{{item.lastMsg.text}}">{{item.lastMsg.text||''}}
+    <view style="margin-top:10rpx" class="ft_30 col_999 line_1" wx:if="{{item.lastMsg.text}}">
+      <text style="color:#ca9999;" wx:if="{{item.lastM=='用户'}}">{{item.lastM||''}}:</text>
+      <text  wx:if="{{item.lastM=='专家'}}">{{item.lastM||''}}:</text>
+      {{item.lastMsg.text||''}}
     </view>
+    
     <view style="margin-top:10rpx" class="ft_28 col_999">{{item.createTime}}</view>
+    <view class="quickUp" catchtap='quickUp'  data-user='{{item}}' wx:if="{{item.quickUpShow}}">抢答</view>
   </view>
 </view>
 <!-- 上拉加载更多 -->
@@ -54,9 +60,11 @@
     </view>
   </view>
 </view>
-
+</view>
 <!-- <loading hidden="{{hidden}}">
     加载中...
 </loading> -->
-
+<view class="showPhone" wx:if='{{showPhone}}'>
+  <button style="margin-top:300rpx" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">手机授权</button>
+</view>
 <!-- <view style="position:absolute;height:368rpx;width:100%;background:blue;bottom:0;left:0"></view> -->

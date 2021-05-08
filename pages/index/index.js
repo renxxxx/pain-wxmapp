@@ -15,8 +15,107 @@ Page({
     nbBackgroundColor: '#ffffff',
     userNo:'',
     shell:null,
-    kw:''
+    kw:'',
+    showPhone:false,
+    loginIs:true
     // hidden:false
+  },
+  quickUp(e){
+    let that =this
+    if(that.data.loginIs==false){
+      wx.navigateTo({
+        url: '../login/login',
+      })
+      return
+    }
+    
+    wx.request({
+      url: app.globalData.url + '/superexpert-let-me-reply?diagnoseNo='+e.currentTarget.dataset.user.diagnoseNo,
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': wx.getStorageSync('cookie')
+      },
+      method: 'get',
+      success: function (res) {
+        wx.hideToast()
+        if (res.data.code == 0) {
+          for(var i in that.data.diagnosesList){
+      
+            if(that.data.diagnosesList[i].diagnoseNo==e.currentTarget.dataset.user.diagnoseNo){
+              that.data.diagnosesList[i].active='activeItem',
+              that.data.diagnosesList[i].quickUpShow=false
+            }
+            that.setData({
+              diagnosesList: that.data.diagnosesList
+            })
+          }
+          wx.navigateTo({
+            url: '../chatNow/chatNow?diagnoseNo='+e.currentTarget.dataset.user.diagnoseNo+'&diseaseId='+e.currentTarget.dataset.user.diseaseNo+'&diseaseName=' + e.currentTarget.dataset.user.diseaseName,
+          })
+        } else {
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon: 'none'
+          })
+        }
+      }
+    })
+   
+  },
+  getPhoneNumber(e) {
+ 
+    var that=this
+    console.log(e.detail)
+    console.log(e.detail.iv)
+    wx.showToast({
+      title: '授权中，请稍后',
+      icon:'none',
+      duration:1000
+    })
+    that.setData({
+      encryptedData:encodeURIComponent(e.detail.encryptedData),
+      iv:encodeURIComponent(e.detail.iv)
+    })
+
+    
+    // wx.login({
+    //     success(res) {
+    //       var jscode = res.code
+          if(e.detail.encryptedData!=null&&e.detail.encryptedData!=''&&e.detail.encryptedData!=undefined){
+            wx.request({
+              url: app.globalData.url + '/bind-phone-by-wxminapp',
+              header: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                'cookie': wx.getStorageSync('cookie')
+              },
+              data:'encryptedData='+encodeURIComponent(e.detail.encryptedData)+'&iv='+encodeURIComponent(e.detail.iv),
+              // +'&jscode='+jscode,
+              method: 'post',
+              success: function (res) {
+                wx.hideToast()
+                if (res.data.code == 0) {
+                  that.setData({
+                    showPhone:false
+                  })
+                } else {
+                  wx.showToast({
+                    title: res.data.codeMsg,
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }else{
+            wx.showToast({
+              title: '获取失败请重试',
+              icon:'none',
+              duration:1000
+            })
+          }
+      //   }
+      // })
+   
+   
   },
   keyword(e){
     this.setData({
@@ -29,6 +128,12 @@ Page({
     })
   },
   searchThis(e){
+    if(this.data.loginIs==false){
+      wx.navigateTo({
+        url: '../login/login',
+      })
+      return
+    }
     wx.showLoading({title: '加载中…'})
     this.setData({
       diagnosesStart:'',
@@ -38,7 +143,14 @@ Page({
     this.diagnosesList()
   },
   jumpThis(e){
+    if(this.data.loginIs==false){
+      wx.navigateTo({
+        url: '../login/login',
+      })
+      return
+    }
     for(var i in this.data.diagnosesList){
+      
       if(this.data.diagnosesList[i].diagnoseNo==e.currentTarget.dataset.user.diagnoseNo){
         this.data.diagnosesList[i].active='activeItem'
       }
@@ -76,12 +188,17 @@ Page({
           let diagnosesStart=that.data.diagnosesStart,diagnosesList=that.data.diagnosesList
           if(res.data.data.diagnoses&&res.data.data.diagnoses.length>0){
             for(var i in res.data.data.diagnoses){
-              // if(res.data.data.diagnoses[i].lastMsg&&res.data.data.diagnoses[i].lastMsg.img){
-              //   res.data.data.diagnoses[i].lastMsg.img=app.globalData.imgUrl+res.data.data.diagnoses[i].lastMsg.img
-              // }
+              if(that.data.superexpert==1&&that.data.userNo!=res.data.data.diagnoses[i].toUserNo&&that.data.userNo!=res.data.data.diagnoses[i].fromUserNo){
+                res.data.data.diagnoses[i].quickUpShow=true
+              }
+              if(res.data.data.diagnoses[i].lastMsg&&res.data.data.diagnoses[i].lastMsg.userNo&&res.data.data.diagnoses[i].lastMsg.userNo==res.data.data.diagnoses[i].toUserNo){
+                res.data.data.diagnoses[i].lastM='专家'
+              }else if(res.data.data.diagnoses[i].lastMsg&&res.data.data.diagnoses[i].lastMsg.userNo&&res.data.data.diagnoses[i].lastMsg.userNo==res.data.data.diagnoses[i].fromUserNo){
+                res.data.data.diagnoses[i].lastM='用户'
+              }
               res.data.data.diagnoses[i].active=''
               diagnosesStart=res.data.data.diagnoses[i].diagnoseNo
-              res.data.data.diagnoses[i].createTime= utils.getDateDiff(Date.parse(utils.renderTime(res.data.data.diagnoses[i].createTime).replace(/-/gi,"/")))
+              res.data.data.diagnoses[i].createTime= utils.getDateDiff(Date.parse(utils.renderTime(res.data.data.diagnoses[i].lastMsg.createTime).replace(/-/gi,"/")))
              console.log(utils.renderTime(res.data.data.diagnoses[i].createTime),res.data.data.diagnoses[i].createTime)
            }
            diagnosesList=that.data.diagnosesList.concat(res.data.data.diagnoses)
@@ -125,7 +242,10 @@ Page({
       success(res) {
         if (res.data.code == 0) {
           for(var i in res.data.data.experts){
-            res.data.data.experts[i].portrait=app.globalData.imgUrl +res.data.data.experts[i].portrait
+            if(res.data.data.experts[i].portrait&&res.data.data.experts[i].portrait.slice(0,1)!='h'){
+              res.data.data.experts[i].portrait=app.globalData.imgUrl +res.data.data.experts[i].portrait
+            }
+            
           }
           that.setData({
             painList: res.data.data.experts
@@ -159,11 +279,19 @@ Page({
   },
   // 事件处理函数
   bindViewTap() {
+   
+  
     wx.navigateTo({
       url: '../logs/logs'
     })
   },
   askQue() {
+    if(this.data.loginIs==false){
+      wx.navigateTo({
+        url: '../login/login',
+      })
+      return
+    }
     if(this.data.shell!=1){
       this.setData({
         diseaseShow: true
@@ -199,6 +327,12 @@ Page({
   },
   // 选择病种
   diseaseSure(e) {
+    if(this.data.loginIs==false){
+      wx.navigateTo({
+        url: '../login/login',
+      })
+      return
+    }
     this.setData({
       diseaseShow: false
     })
@@ -225,23 +359,7 @@ Page({
     })
     
   },
-  onLoad() {
-    this.setData({
-      nbTitle: '新标题',
-      nbLoading: false,
-      nbFrontColor: '#ffffff',
-      nbBackgroundColor: '#3244e4',
-      userNo:app.globalData.loginRefresh.userNo
-    })
-    this.painList()
-    this.diseaseList()
-    this.diagnosesList()
-    if (wx.getUserProfile) {
-      this.setData({
-        canIUseGetUserProfile: true
-      })
-    }
-  },
+  
   onShow() {
     wx.hideTabBar({
       success: function () {
@@ -249,6 +367,46 @@ Page({
       }
     })
     var that=this
+    wx.request({
+      url:app.globalData.url + '/login-refresh',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': wx.getStorageSync('cookie')
+      },
+      method:'get',
+      success(res){
+        if(res.data.code==0){
+          app.globalData.loginRefresh=res.data.data
+          // if(res.data.data.superexpert==1){
+            that.setData({superexpert:res.data.data.superexpert,userNo:res.data.data.userNo})
+          // }
+              if(res.data.data.lastEntrance==1){
+                wx.switchTab({
+                  url: '/pages/plIndex/plIndex',
+                })
+              }else {
+                wx.switchTab({
+                  url: '/pages/index/index',
+                })
+              }
+              if(res.data.data.phone==null||res.data.data.phone==''||res.data.data.phone==undefined){
+                that.setData({
+                  showPhone:true
+                })
+              }
+              if(that.data.diagnosesList.length==0){
+that.diagnosesList()
+              }
+        }else if(res.data.code==20){
+          that.setData({
+            loginIs:false
+          })
+          // wx.redirectTo({
+          //   url: '../login/login',
+          // })
+        }
+      }
+    })
     wx.request({
       url: app.globalData.url+'/archive?name=shell',
       method: 'get',
@@ -264,6 +422,43 @@ Page({
         app.globalData.shell=res.data.data.archive.shell
       }
     })
+  },
+  onLoad() {
+    this.setData({
+      nbTitle: '新标题',
+      nbLoading: false,
+      nbFrontColor: '#ffffff',
+      nbBackgroundColor: '#3244e4',
+      userNo:app.globalData.loginRefresh.userNo
+    })
+    this.painList()
+    this.diseaseList()
+    let that=this
+    wx.request({
+      url:app.globalData.url + '/login-refresh',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': wx.getStorageSync('cookie')
+      },
+      method:'get',
+      success(res){
+        if(res.data.code==0){
+          app.globalData.loginRefresh=res.data.data
+            that.setData({superexpert:res.data.data.superexpert,userNo:res.data.data.userNo})
+            that.diagnosesList()
+        }else if(res.data.code==20){
+          that.setData({
+            loginIs:false
+          })
+        }
+      }
+    })
+   
+    if (wx.getUserProfile) {
+      this.setData({
+        canIUseGetUserProfile: true
+      })
+    }
   },
   onReady() {
     wx.hideTabBar()
@@ -297,8 +492,10 @@ Page({
     this.setData({
       diagnosesStart:'',
       lastText:'上滑加载更多',
-      diagnosesList:[]
+      diagnosesList:[],
+      painList:[]
     })
+    this.painList()
     this.diagnosesList()
     wx.stopPullDownRefresh()
   },
