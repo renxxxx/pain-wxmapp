@@ -34,8 +34,8 @@
       <image class="lastMsgPic" src="../images/picture1.png"></image>
     </view>
     <view style="margin-top:10rpx" class="ft_30 col_999 line_1" wx:if="{{item.lastMsg.text}}">
-      <text style="color:#ca9999;" wx:if="{{item.lastM=='用户'}}">{{item.lastM||''}}:</text>
-      <text  wx:if="{{item.lastM=='专家'}}">{{item.lastM||''}}:</text>
+      <text style="color:#ca9999;" wx:if="{{shell!=1&&item.lastM=='用户'}}">{{item.lastM||''}}:</text>
+      <text  wx:if="{{shell!=1&&item.lastM=='专家'}}">{{item.lastM||''}}:</text>
       {{item.lastMsg.text||''}}
     </view>
     

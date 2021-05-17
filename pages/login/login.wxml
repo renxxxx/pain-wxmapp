@@ -1,7 +1,7 @@
 <!--pages/login/login.wxml-->
 <view>  
-  <image class="avator" src="../images/patient.png"></image>
-  <text class="title">疼痛诊疗</text>
+  <!-- <image class="avator" src="../images/patient.png"></image> -->
+  <text class="title" style="margin-top:200rpx">忠安平台</text>
   	<button class="loginWx"  open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
       <!-- <image src="../img/weixin@2x.png" mode="aspectFill"></image> -->
        微信账号快捷登录
