@@ -34,7 +34,7 @@
       },
       {
         "pagePath": "pages/logs/logs",
-        "text": "记录",
+        "text": "提问记录",
         "iconPath": "/pages/images/jl.png",
         "selectedIconPath": "/pages/images/jl1.png"
       },

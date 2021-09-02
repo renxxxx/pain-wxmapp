@@ -62,6 +62,7 @@ Page({
     })
    
   },
+ 
   getPhoneNumber(e) {
  
     var that=this
@@ -198,8 +199,15 @@ Page({
               }
               res.data.data.diagnoses[i].active=''
               diagnosesStart=res.data.data.diagnoses[i].diagnoseNo
-              res.data.data.diagnoses[i].createTime= utils.getDateDiff(Date.parse(utils.renderTime(res.data.data.diagnoses[i].lastMsg.createTime).replace(/-/gi,"/")))
-             console.log(utils.renderTime(res.data.data.diagnoses[i].createTime),res.data.data.diagnoses[i].createTime)
+              if(res.data.data.diagnoses[i].lastMsg){
+                res.data.data.diagnoses[i].createTime= utils.getDateDiff(Date.parse(utils.renderTime(res.data.data.diagnoses[i].lastMsg.createTime).replace(/-/gi,"/")))
+                
+                console.log(utils.renderTime(res.data.data.diagnoses[i].createTime),res.data.data.diagnoses[i].createTime)
+              }else{
+                res.data.data.diagnoses[i].createTime= utils.getDateDiff(Date.parse(utils.renderTime(res.data.data.diagnoses[i].createTime).replace(/-/gi,"/")))
+                console.log(utils.renderTime(res.data.data.diagnoses[i].createTime),res.data.data.diagnoses[i].createTime)
+              }
+              
            }
            diagnosesList=that.data.diagnosesList.concat(res.data.data.diagnoses)
            wx.hideLoading()
@@ -433,6 +441,7 @@ that.diagnosesList()
     })
     this.painList()
     this.diseaseList()
+    this.diagnosesList()
     let that=this
     wx.request({
       url:app.globalData.url + '/login-refresh',
@@ -445,7 +454,7 @@ that.diagnosesList()
         if(res.data.code==0){
           app.globalData.loginRefresh=res.data.data
             that.setData({superexpert:res.data.data.superexpert,userNo:res.data.data.userNo})
-            that.diagnosesList()
+           
         }else if(res.data.code==20){
           that.setData({
             loginIs:false
@@ -462,6 +471,10 @@ that.diagnosesList()
   },
   onReady() {
     wx.hideTabBar()
+  },
+  onHide(){
+    console.log(12312312);
+    
   },
   getUserProfile(e) {
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗

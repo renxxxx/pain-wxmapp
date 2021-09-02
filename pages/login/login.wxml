@@ -2,7 +2,10 @@
 <view>  
   <!-- <image class="avator" src="../images/patient.png"></image> -->
   <text class="title" style="margin-top:200rpx">忠安平台</text>
-  	<button class="loginWx"  open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+  	<!-- <button class="loginWx"  open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+       微信账号快捷登录
+		 </button> -->
+		 <button class="loginWx" bindtap="getUserProfile">
       <!-- <image src="../img/weixin@2x.png" mode="aspectFill"></image> -->
        微信账号快捷登录
      </button>
@@ -25,4 +28,7 @@
 	</view>
 </view>
 <text class="version" bindtap="version">ver : {{version}}</text>
+</view>
+<view class="showPhone" wx:if='{{showPhone}}'>
+  <button style="margin-top:300rpx" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">手机授权</button>
 </view>

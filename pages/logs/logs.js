@@ -83,8 +83,16 @@ Page({
           if(res.data.data.diagnoses&&res.data.data.diagnoses.length>0){
             for(var i in res.data.data.diagnoses){
               diagnosesStart=res.data.data.diagnoses[i].diagnoseNo
+            //   res.data.data.diagnoses[i].createTime= utils.getDateDiff(Date.parse(utils.renderTime(res.data.data.diagnoses[i].lastMsg.createTime).replace(/-/gi,"/")))
+            //  console.log(utils.renderTime(res.data.data.diagnoses[i].createTime),res.data.data.diagnoses[i].createTime)
+             if(res.data.data.diagnoses[i].lastMsg){
               res.data.data.diagnoses[i].createTime= utils.getDateDiff(Date.parse(utils.renderTime(res.data.data.diagnoses[i].lastMsg.createTime).replace(/-/gi,"/")))
-             console.log(utils.renderTime(res.data.data.diagnoses[i].createTime),res.data.data.diagnoses[i].createTime)
+              console.log(utils.renderTime(res.data.data.diagnoses[i].createTime),res.data.data.diagnoses[i].createTime)
+            }else{
+              res.data.data.diagnoses[i].createTime= utils.getDateDiff(Date.parse(utils.renderTime(res.data.data.diagnoses[i].createTime).replace(/-/gi,"/")))
+              console.log(utils.renderTime(res.data.data.diagnoses[i].createTime),res.data.data.diagnoses[i].createTime)
+            }
+
            }
            diagnosesList=that.data.diagnosesList.concat(res.data.data.diagnoses)
            wx.hideLoading()

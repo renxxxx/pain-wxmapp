@@ -19,6 +19,7 @@ function renderTime(date) {
   return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '') 
 }
 function getDateDiff(dateTimeStamp){
+	console.log(dateTimeStamp)
   let result
 	var minute = 1000 * 60;
 	var hour = minute * 60;

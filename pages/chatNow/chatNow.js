@@ -36,7 +36,9 @@ Page({
     allContentList: [],
     msgsList:[],//相当于allContentList
     num: 0,
-    focus:false
+    focus:false,
+    timerTask:'',
+    sendMsgFn:''
   },
 
     // 聊天列表
@@ -72,12 +74,10 @@ Page({
                 }
                 msgsStart = res.data.data.msgs[i].msgNo
                 res.data.data.msgs[i].createTime = utils.getDateDiff(Date.parse(utils.renderTime(res.data.data.msgs[i].createTime).replace(/-/gi, "/")))
-                console.log(utils.renderTime(res.data.data.msgs[i].createTime), res.data.data.msgs[i].createTime)
               }
               msgsList=res.data.data.msgs.reverse().concat(that.data.msgsList)
               // msgsList = that.data.msgsList.concat(res.data.data.msgs.reverse())
               wx.hideLoading()
-              console.log(msgsList)
               that.setData({
                 msgsList: msgsList,
                 lastText: '上滑加载更多'
@@ -107,7 +107,6 @@ Page({
     },
     
   previewImage(e){
-    console.log(e.currentTarget.dataset.src)
     // let urls=[e.currentTarget.dataset.src]
     // console.log(urls)
     // for(var i in )
@@ -127,7 +126,6 @@ Page({
         const tempFilePaths = res.tempFilePaths
         // var picBlobShow = that.data.picBlobShow
         // var picBlob = that.data.picBlob
-        console.log(tempFilePaths)
         let msgsList=that.data.msgsList
         msgsList.push({messageNo:2,createTime:'3分钟前',img:tempFilePaths[0],txt:'',userNo:'123'})
         that.setData({
@@ -170,12 +168,43 @@ Page({
       }
     })
   },
+
+  setIn(){
+    let that=this
+    console.log('1231===='+SocketTask)
+    that.setData({
+      timerTask: setInterval(function () {
+        console.log(socketOpen.readyState)
+        if(SocketTask&&SocketTask.readyState==3){
+          // socketOpen = false;
+          that.webSocketFn()
+        }else{
+          // socketOpen = false;
+          console.log('连接着');
+        }
+      }, 3000)
+    })
+  },
+  setInEve(){
+    let that=this
+    that.setData({
+      sendMsgFn: setInterval(function () {
+        // console.log('30s')
+        that.sendSocketMessage({'haimeisi':1})
+      }, 30000)
+    })
+  },
+  onHide: function () {
+
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(url)
     let that=this,height=0
+    that.webSocketFn()
+    that.setIn()
+    that.setInEve()
     wx.getSystemInfo({
       success: function (res) {
 
@@ -183,7 +212,6 @@ Page({
         let clientWidth = res.windowWidth;
         let changeHeight = 750 / clientWidth;
          height = clientHeight * changeHeight;
-        console.log(res,height)
         // vm.globalData.height=height
     }})
     that.setData({
@@ -231,60 +259,60 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    var that = this;
-    SocketTask.onOpen(res => {
+    // var that = this;
 
+
+    let that=this
+    console.log(SocketTask)
+    SocketTask.onOpen(res => {
+      console.log(SocketTask)
       socketOpen = true;
       console.log('监听 WebSocket 连接打开事件。', res)
     })
     SocketTask.onClose(onClose => {
+      console.log(SocketTask)
       console.log('监听 WebSocket 连接关闭事件。', onClose)
+      // debugger
       socketOpen = false;
-      this.webSocket()
+      // this.webSocketFn()
+      // clearInterval(this.data.sendMsgFn);
+      // this.setData({
+      //   sendMsgFn:null
+      // })
+      // this.setIn()
+      
     })
     SocketTask.onError(onError => {
       console.log('监听 WebSocket 错误。错误信息', onError)
       socketOpen = false
+      // clearInterval(this.data.sendMsgFn);
+      // this.setData({
+      //   sendMsgFn:null
+      // })
     })
     SocketTask.onMessage(onMessage => {
-   
+      console.log('onMessage');
+      
       let imgData=JSON.parse(onMessage.data)
+      console.log(imgData)
       if(imgData.diagnoseNo==this.data.diagnoseNo){
         let msgsList=this.data.msgsList
         if(imgData.img){
           imgData.img=app.globalData.imgUrl+imgData.img
         }
-        console.log(imgData)
-      msgsList.push(imgData)
+        console.log(msgsList)
+      // msgsList.push(imgData)
+      // console.log(msgsList)
       this.setData({
         msgsList:msgsList,
         toView:`item${this.data.msgsList.length-1}`,
         // sendMsg:''
       })
-      console.log(this.data.msgsList)
       }
       
       // console.log('监听WebSocket接受到服务器的消息事件。服务器返回的消息', JSON.parse(onMessage.data))
       var onMessage_data =onMessage.data// JSON.parse(onMessage.data)
-    //   if (onMessage_data.cmd == 1) {
-    //     that.setData({
-    //       link_list: text
-    //     })
-    //     console.log(text, text instanceof Array)
-    //     // 是否为数组
-    //     if (text instanceof Array) {
-    //       for (var i = 0; i < text.length; i++) {
-    //         text[i]
-    //       }
-    //     } else {
- 
-    //     }
-    //     that.data.allContentList.push({ is_ai: true, text: onMessage_data.body });
-    //     that.setData({
-    //       allContentList: that.data.allContentList
-    //     })
-    //     that.bottom()
-    //   }
+    
     })
   },
 
@@ -292,12 +320,14 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (!socketOpen) {
-      this.webSocket()
+    if (SocketTask&&SocketTask.readyState==3) {
+      this.webSocketFn()
     }
   },
-  webSocket: function () {
-    console.log(app.globalData.token)
+  webSocketFn: function () {
+    // console.log(app.globalData.token)
+    console.log(socketOpen)
+    let that=this
     // 创建Socket
     SocketTask = wx.connectSocket({
       url: url+app.globalData.loginRefresh.userNo,
@@ -305,10 +335,13 @@ Page({
       header: {
         'content-type': 'application/json'
       },
+      // protocols: ['protocol1'],
       method: 'post',
       success: function (res) {
         console.log('WebSocket连接创建', res)
         socketOpen = true
+        console.log(socketOpen);
+        
       },
       fail: function (err) {
         wx.showToast({
@@ -316,6 +349,61 @@ Page({
         })
         console.log(err)
       },
+      complete: function (err) {
+        // wx.showToast({
+        //   title: '网络异常！',
+        // })
+        console.log(err)
+      },
+    })
+    console.log(SocketTask)
+    // let that=this
+    SocketTask.onOpen(res => {
+      console.log(SocketTask)
+      socketOpen = true;
+      console.log('监听 WebSocket 连接打开事件。', res)
+    })
+    SocketTask.onClose(onClose => {
+      console.log(SocketTask)
+      console.log('监听 WebSocket 连接关闭事件。', onClose)
+      // debugger
+      socketOpen = false;
+      // this.webSocketFn()
+      // clearInterval(this.data.sendMsgFn);
+      // this.setData({
+      //   sendMsgFn:null
+      // })
+      // this.setIn()
+      
+    })
+    SocketTask.onError(onError => {
+      console.log('监听 WebSocket 错误。错误信息', onError)
+      socketOpen = false
+      // clearInterval(this.data.sendMsgFn);
+      // this.setData({
+      //   sendMsgFn:null
+      // })
+    })
+    SocketTask.onMessage(onMessage => {
+      console.log('onMessage');
+      
+      let imgData=JSON.parse(onMessage.data)
+      if(imgData.diagnoseNo==this.data.diagnoseNo){
+        let msgsList=this.data.msgsList
+        if(imgData.img){
+          imgData.img=app.globalData.imgUrl+imgData.img
+        }
+      msgsList.push(imgData)
+      this.setData({
+        msgsList:msgsList,
+        toView:`item${this.data.msgsList.length-1}`,
+        // sendMsg:''
+      })
+      }
+      
+      // console.log('监听WebSocket接受到服务器的消息事件。服务器返回的消息', JSON.parse(onMessage.data))
+      var onMessage_data =onMessage.data// JSON.parse(onMessage.data)
+    
     })
   },
   sendMsgBind(e){
@@ -337,11 +425,11 @@ Page({
       img:"",
       diagnoseNo:that.data.diagnoseNo
     }
-    console.log(socketOpen)
-    if (socketOpen) {
+    console.log(SocketTask)
+    if (SocketTask&&SocketTask.readyState==1) {
       
       // 如果打开了socket就发送数据给服务器
-      sendSocketMessage(data)
+      that.sendSocketMessage(data)
       // this.data.allContentList.push({ is_my: { text: this.data.inputValue }});
       msgsList.push({
         action:'1',
@@ -356,6 +444,13 @@ Page({
         sendMsg:'',
         focus:false
       })
+    }else if (SocketTask&&SocketTask.readyState==3){
+      // wx.showToast({
+      //   title: '断线重连中...',
+      //   icon:"none"
+      // })
+      console.log('断线重连中...')
+      that.webSocketFn()
     }
   },
   bindKeyInput: function (e) {
@@ -364,11 +459,11 @@ Page({
     })
   },
  
-  onHide: function () {
-    SocketTask.close(function (close) {
-      console.log('关闭 WebSocket 连接。', close)
-    })
-  },
+  // onHide: function () {
+  //   SocketTask.close(function (close) {
+  //     console.log('关闭 WebSocket 连接。', close)
+  //   })
+  // },
   upimg: function () {
     var that = this;
     var msgsList=that.data.msgsList
@@ -385,7 +480,6 @@ Page({
             filePath: tempFilePaths[0],
             name: 'file',
             success: function (res) {
-              console.log(JSON.parse(res.data),JSON.parse(res.data).data.url)
                 // wx.showToast({
                 //   title: '图片发送成功！',
                 //   duration: 3000
@@ -401,7 +495,7 @@ Page({
                 if (socketOpen) {
                   
                   // 如果打开了socket就发送数据给服务器
-                  sendSocketMessage(data)
+                  that.sendSocketMessage(data)
                   if(imgurl){
                     imgurl=app.globalData.imgUrl+imgurl
                   }
@@ -439,15 +533,26 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
-
-  },
+  // onHide: function () {
+  //   console.log(123)
+  // },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    console.log(456)
+    SocketTask.close(function (close) {
+      console.log('关闭 WebSocket 连接。', close)
+    })
+    let sendMsgFn = this.data.sendMsgFn;
+    let timerTask = this.data.timerTask;
+    clearInterval(sendMsgFn);
+    clearInterval(timerTask);
+    this.setData({
+      timerTask: null,
+      sendMsgFn:null
+    })
   },
   bindscrolltoupper(e){
     this.msgsList()
@@ -465,7 +570,11 @@ Page({
   onReachBottom: function () {
 
   },
-
+  
+  // onHide(){
+  //   console.log(12312231231321312);
+    
+  // },
   /**
    * 用户点击右上角分享
    */
@@ -493,16 +602,30 @@ Page({
 	      // },
 	      imageUrl: 'https://njshangka.com/favicon.ico',
 	    }
-	},
+  },
+  
+
+
+  sendSocketMessage:function (msg) {
+    var that = this;
+    console.log('通过 WebSocket 连接发送数据', JSON.stringify(msg))
+    console.log(SocketTask)
+    if(SocketTask&&SocketTask.readyState==3){
+      // wx.showToast({
+      //   title: '断线重连中...',
+      //   icon:"none"
+      // })
+      console.log('断线重连中...')
+      that.webSocketFn()
+      
+    }else{
+      SocketTask.send({
+        data: JSON.stringify(msg)
+      }, function (res) {
+        console.log('已发送', res)
+      })
+    }
+   
+  } 
 })
 //通过 WebSocket 连接发送数据，需要先 wx.connectSocket，并在 wx.onSocketOpen 回调之后才能发送。
-function sendSocketMessage(msg) {
-  var that = this;
-  console.log('通过 WebSocket 连接发送数据', JSON.stringify(msg))
-  console.log(SocketTask)
-  SocketTask.send({
-    data: JSON.stringify(msg)
-  }, function (res) {
-    console.log('已发送', res)
-  })
-} 

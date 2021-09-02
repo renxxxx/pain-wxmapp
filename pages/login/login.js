@@ -9,7 +9,11 @@ Page({
     showIs:false,
     version:app.globalData.version,
     tabbarIs:'',
-    route:''
+    route:'',
+    showPhone:false,
+    thiscode: '',
+              thisnickname:'',
+              thisheadimg:'',
   },
 
   /**
@@ -32,22 +36,27 @@ Page({
       showIs: true
     })
   },
-  bindGetUserInfo: function(e) {
+
+  getPhoneNumber(e) {
+ 
     var that=this
-    console.log(e.detail.userInfo)
-    if (e.detail.userInfo){
-      wx.showToast({
-        title: '登录中，请稍后',
-        icon:'none',
-        duration: 5000,
-      })
-      //用户按了允许授权按钮
-      
-      wx.login({
-        success(res) {
-          console.log(e.detail.userInfo.nickName)
-          var code = res.code
-          if(e.detail.userInfo.nickName!=null&&e.detail.userInfo.nickName!=undefined&&e.detail.userInfo.nickName!=''){
+    console.log(e.detail)
+    console.log(e.detail.iv)
+    wx.showToast({
+      title: '授权中，请稍后',
+      icon:'none',
+      duration:1000
+    })
+    that.setData({
+      encryptedData:encodeURIComponent(e.detail.encryptedData),
+      iv:encodeURIComponent(e.detail.iv)
+    })
+
+    
+    // wx.login({
+    //     success(res) {
+    //       var jscode = res.code
+          if(e.detail.encryptedData!=null&&e.detail.encryptedData!=''&&e.detail.encryptedData!=undefined){
             wx.request({
               url: app.globalData.url + '/login-by-wxmapp',
               header: {
@@ -55,9 +64,11 @@ Page({
               },
               method: 'get',
               data: {
-                code: code,
-                nickname:e.detail.userInfo.nickName,
-                headimg:e.detail.userInfo.avatarUrl,
+                code: that.data.thiscode,
+                nickname:that.data.thisnickname,
+                headimg:that.data.thisheadimg,
+                phoneEncryptedData:e.detail.encryptedData,
+                phoneIv:e.detail.iv
               },
               success: function (res) {
                 wx.hideToast()
@@ -126,6 +137,110 @@ Page({
                 }
               }
             })
+
+            // wx.request({
+            //   url: app.globalData.url + '/bind-phone-by-wxminapp',
+            //   header: {
+            //     "Content-Type": "application/x-www-form-urlencoded",
+            //     'cookie': wx.getStorageSync('cookie')
+            //   },
+            //   data:'encryptedData='+encodeURIComponent(e.detail.encryptedData)+'&iv='+encodeURIComponent(e.detail.iv),
+            //   // +'&jscode='+jscode,
+            //   method: 'post',
+            //   success: function (res) {
+            //     wx.hideToast()
+            //     if (res.data.code == 0) {
+            //       that.setData({
+            //         showPhone:false
+            //       })
+            //     } else {
+            //       wx.showToast({
+            //         title: res.data.codeMsg,
+            //         icon: 'none'
+            //       })
+            //     }
+            //   }
+            // })
+          }else{
+            wx.showToast({
+              title: '获取失败请重试',
+              icon:'none',
+              duration:1000
+            })
+          }
+      //   }
+      // })
+   
+   
+  },
+  getUserProfile(e) {
+    // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认
+    // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
+    wx.getUserProfile({
+      desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+      success: (res) => {
+        console.log(res.userInfo)
+        let _res=res.userInfo
+        let that=this
+        if (res.userInfo){
+          wx.login({
+            success(res) {
+              // console.log(res.userInfo.nickName)
+              var code = res.code
+              
+              if(_res.nickName!=null&&_res.nickName!=undefined&&_res.nickName!=''){
+                
+                that.setData({
+                  showPhone:true,
+              thiscode: code,
+              thisnickname:_res.nickName,
+              thisheadimg:_res.avatarUrl,
+                })
+                
+                
+              }else{
+                wx.showToast({
+                  title: '授权失败',
+                  icon: 'none',
+                  duration: 2000,
+                });
+              }
+            }
+          })
+        }
+        this.setData({
+          userInfo: res.userInfo,
+          hasUserInfo: true
+        })
+      }
+    })
+  },
+  bindGetUserInfo: function(e) {
+    var that=this
+    console.log(e.detail.userInfo)
+    if (e.detail.userInfo){
+      
+      // wx.showToast({
+      //   title: '登录中，请稍后',
+      //   icon:'none',
+      //   duration: 5000,
+      // })
+      //用户按了允许授权按钮
+      
+      wx.login({
+        success(res) {
+          console.log(e.detail.userInfo.nickName)
+          var code = res.code
+          
+          if(e.detail.userInfo.nickName!=null&&e.detail.userInfo.nickName!=undefined&&e.detail.userInfo.nickName!=''){
+            
+            that.setData({
+              showPhone:true,
+              thiscode: code,
+              thisnickname:e.detail.userInfo.nickName,
+              thisheadimg:e.detail.userInfo.avatarUrl,
+            })
+            
           }else{
             wx.showToast({
               title: '授权失败',

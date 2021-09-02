@@ -20,33 +20,7 @@ App({
     //       success(res){
     //         if(res.data.code==0){
     //           wx.setStorageSync('cookie', res.header['Set-Cookie'])
-              // wx.request({
-              //   url:vm.globalData.url + '/login-refresh',
-              //   header: {
-              //     "Content-Type": "application/x-www-form-urlencoded",
-              //     'cookie': wx.getStorageSync('cookie')
-              //   },
-              //   method:'get',
-              //   success(res){
-              //     if(res.data.code==0){
-              //           vm.globalData.loginRefresh=res.data.data
-              //           if(res.data.data.lastEntrance==1){
-              //             wx.switchTab({
-              //               url: '/pages/plIndex/plIndex',
-              //             })
-              //           }else {
-              //             wx.switchTab({
-              //               url: '/pages/index/index',
-              //             })
-              //           }
-                        
-              //     }else if(res.data.code==20){
-              //       wx.redirectTo({
-              //         url: '../login/login',
-              //       })
-              //     }
-              //   }
-              // })
+            23
     //         }
     //       }
     
